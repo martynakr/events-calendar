@@ -1,0 +1,25 @@
+@use "../../../assets/pallete" as *;
+.TableCell {
+    font-weight: bold;
+    font-size: 40px;
+    border-top: 4px solid black;
+    height: 200px;
+    width: 12%;
+    padding: 10px;
+    margin: 40px;
+    vertical-align: top;
+
+    &:hover {
+        background-color: $aquablueTransparent;
+    }
+
+    &_Inactive {
+        color: rgb(194, 194, 194);
+        border-color: rgb(194, 194, 194);
+    }
+
+    &_Today {
+        color: $aquablue;
+        border-color: $aquablue;
+    }
+}

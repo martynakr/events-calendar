@@ -1,0 +1,27 @@
+@use "../src/assets/pallete.scss" as *;
+
+table {
+    border-collapse: separate;
+    border-spacing: 30px;
+    width: 90%;
+}
+thead > tr {
+    text-align: right;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    height: 50px;
+    width: 50px;
+
+    font-size: 40px;
+
+    &:hover {
+        background-color: $aquablue;
+        color: white;
+        border-radius: 60px;
+
+        text-align: center;
+    }
+}
