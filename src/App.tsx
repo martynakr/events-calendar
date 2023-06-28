@@ -156,6 +156,7 @@ function App() {
                     <Nav onClick={handleTodayClick} />
                     <div className={styles.App_Container}>
                         <Button
+                            data-testid={"prevBtn"}
                             onClick={handlePrevClick}
                             variant={ButtonVariant.ICON}
                         >
@@ -171,6 +172,7 @@ function App() {
                         </h1>
 
                         <Button
+                            data-testid={"nextBtn"}
                             onClick={handleNextClick}
                             variant={ButtonVariant.ICON}
                         >
