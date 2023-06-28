@@ -1,0 +1,41 @@
+@use "../../assets/pallete.scss" as *;
+
+.Modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(3, 50, 63, 0.715);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_Hide {
+        display: none;
+    }
+
+    &_Background {
+        background-color: white;
+        width: 40%;
+        padding: 20px;
+        height: 60vh;
+        text-align: right;
+    }
+
+    &_Content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &_Close {
+        font-size: 30px;
+        &:hover {
+            color: $aquablue;
+        }
+    }
+}

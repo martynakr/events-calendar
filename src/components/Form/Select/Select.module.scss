@@ -1,0 +1,14 @@
+.Select {
+    &_Input_Wrapper {
+        border: 1px solid black;
+        display: flex;
+    }
+    &_Input {
+        border: none;
+        width: 100%;
+    }
+
+    &_Option {
+        margin: 0 4px;
+    }
+}

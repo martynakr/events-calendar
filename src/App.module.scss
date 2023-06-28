@@ -1,0 +1,18 @@
+.App {
+    &_Container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%;
+    }
+}
+
+.container {
+    display: flex;
+    // width: 100%;
+    justify-content: space-between;
+}
+
+.container input {
+    width: 95%;
+}

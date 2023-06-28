@@ -3,9 +3,10 @@ import styles from "./TableCell.module.scss";
 interface ITableCellProps {
     dateInfo: Date;
     currMonth: number;
+    onClick: (data: boolean) => unknown;
 }
 
-const TableCell = ({ dateInfo, currMonth }: ITableCellProps) => {
+const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
     const today = new Date();
     console.log();
 
@@ -20,7 +21,7 @@ const TableCell = ({ dateInfo, currMonth }: ITableCellProps) => {
     )
         classes += ` ${styles.TableCell_Today}`;
     return (
-        <td className={classes}>
+        <td className={classes} onClick={() => onClick(true)}>
             <p>
                 {dateInfo.getDate().toString().length < 2
                     ? "0" + dateInfo.getDate()

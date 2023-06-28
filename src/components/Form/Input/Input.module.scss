@@ -1,0 +1,19 @@
+.Input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    &_Input {
+        width: 100%;
+        padding: 5px;
+    }
+
+    &_Label {
+        font-weight: bold;
+    }
+
+    * {
+        margin: 5px;
+    }
+}
