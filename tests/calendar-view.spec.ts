@@ -71,6 +71,7 @@ test.describe("Calendar view", () => {
     test("should render a table with all current month days, days from previous and month to make it full weeks", async ({
         page,
     }) => {
+        // render a component and pass props instead?
         const todayDate = new Date();
         const year = todayDate.getFullYear();
         const month = todayDate.getMonth();
