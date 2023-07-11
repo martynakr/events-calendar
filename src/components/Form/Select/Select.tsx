@@ -14,6 +14,9 @@ const Select = ({ options, id }: ISelectProps) => {
     const [newOption, setNewOption] = useState("");
     const [coloursArr, setColoursArr] = useState<string[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const {
+        formState: { isSubmitSuccessful },
+    } = useFormContext();
 
     const handleChange = (e: any) => {
         if (
@@ -35,10 +38,10 @@ const Select = ({ options, id }: ISelectProps) => {
         return;
     };
 
-    const handleSelect = (event: any) => {
-        console.log("selected from a list");
-        // setAllOptions([...allOptions, event?.target.value]);
-    };
+    useEffect(() => {
+        setAllOptions([]);
+    }, [isSubmitSuccessful]);
+
     const handleClick = () => {
         setDisplayAddBtn(false);
         setAllOptions([...allOptions, newOption]);
@@ -49,6 +52,7 @@ const Select = ({ options, id }: ISelectProps) => {
         setColoursArr([...coloursArr, getRandomColor()]);
         setValue(id, allOptions);
     }, [allOptions]);
+
     function getRandomColor(): string {
         const hue = Math.floor(Math.random() * 360);
         const saturation = Math.floor(Math.random() * 30) + 70;

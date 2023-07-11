@@ -27,7 +27,6 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                 );
             });
             setEventsForDay(filteredEvents);
-            console.log("triggered update events for days");
         }
     }, [events, currMonth]);
 
