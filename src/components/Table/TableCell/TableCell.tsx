@@ -1,15 +1,37 @@
+import { useContext, useEffect, useState } from "react";
 import styles from "./TableCell.module.scss";
+import { EventsContext } from "../../../context/EventsContext";
+import EventCard from "../../EventCard/EventCard";
+import { isNotFirstEventDay } from "../../../utils/date-utils";
+import { ClickedDayContext } from "../../../context/ClickedDayProvider";
 
 interface ITableCellProps {
     dateInfo: Date;
     currMonth: number;
-    onClick: (data: boolean) => unknown;
+    onClick: (data: Date) => unknown;
 }
 
 const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
-    const today = new Date();
-    console.log();
+    const [eventsForDay, setEventsForDay] = useState<any>([]);
+    const { events } = useContext(EventsContext);
+    const { setClickedDay } = useContext(ClickedDayContext);
 
+    useEffect(() => {
+        if (events) {
+            const filteredEvents = events.filter((ev: any) => {
+                return (
+                    new Date(ev.startDate).toLocaleDateString() ===
+                        dateInfo.toLocaleDateString() ||
+                    (new Date(ev.startDate) <= dateInfo &&
+                        new Date(ev.endDate) >= dateInfo)
+                );
+            });
+            setEventsForDay(filteredEvents);
+            console.log("triggered update events for days");
+        }
+    }, [events, currMonth]);
+
+    const today = new Date();
     let classes =
         currMonth === dateInfo.getMonth()
             ? `${styles.TableCell}`
@@ -21,12 +43,37 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
     )
         classes += ` ${styles.TableCell_Today}`;
     return (
-        <td className={classes} onClick={() => onClick(true)}>
+        <td
+            className={classes}
+            onClick={() => {
+                onClick(dateInfo);
+                setClickedDay(dateInfo);
+            }}
+        >
             <p>
                 {dateInfo.getDate().toString().length < 2
                     ? "0" + dateInfo.getDate()
                     : dateInfo.getDate()}
             </p>
+            {eventsForDay.length > 0 &&
+                eventsForDay.map((ev: any) => {
+                    // const duartion =
+                    //     (new Date(ev.endDay).getTime() -
+                    //         new Date(ev.startDay).getTime()) /
+                    //         (1000 * 60 * 60 * 24) +
+                    //     1;
+                    // console.log(duartion, "duration", ev.name);
+                    return (
+                        <EventCard
+                            eventName={ev.eventName}
+                            key={ev.id}
+                            isNotFirstEventDay={isNotFirstEventDay(
+                                dateInfo,
+                                ev
+                            )}
+                        />
+                    );
+                })}
         </td>
     );
 };

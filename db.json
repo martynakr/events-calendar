@@ -1,0 +1,22 @@
+{
+    "events": [
+        {
+            "id": 1,
+            "eventName": "Yoga session",
+            "startDate": "2023-07-12",
+            "endDate": "2023-07-12"
+        },
+        {
+            "id": 2,
+            "eventName": "Movie night",
+            "startDate": "2023-07-12",
+            "endDate": "2023-07-13"
+        },
+        {
+            "id": 3,
+            "eventName": "Multi day event",
+            "startDate": "2023-07-01",
+            "endDate": "2023-07-05"
+        }
+    ]
+}

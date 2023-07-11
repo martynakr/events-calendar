@@ -2,7 +2,7 @@ import TableCell from "../TableCell/TableCell";
 
 interface ITableBodyProps {
     weeks: Date[][];
-    onClick: (data: boolean) => unknown;
+    onClick: (data: Date) => unknown;
 }
 
 const TableBody = ({ weeks, onClick }: ITableBodyProps) => {

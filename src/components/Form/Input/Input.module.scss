@@ -7,6 +7,13 @@
     &_Input {
         width: 100%;
         padding: 5px;
+        &_Error {
+            color: rgb(160, 7, 7);
+            background-color: rgb(255, 224, 224);
+            padding: 4px;
+            font-weight: bold;
+            font-size: 12px;
+        }
     }
 
     &_Label {

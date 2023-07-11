@@ -8,7 +8,7 @@ interface ISelectProps {
 }
 
 const Select = ({ options, id }: ISelectProps) => {
-    const { register } = useFormContext();
+    const { register, setValue } = useFormContext();
     const [displayAddBtn, setDisplayAddBtn] = useState(false);
     const [allOptions, setAllOptions] = useState<string[]>([]);
     const [newOption, setNewOption] = useState("");
@@ -47,13 +47,16 @@ const Select = ({ options, id }: ISelectProps) => {
     useEffect(() => {
         if (inputRef.current) inputRef.current.value = "";
         setColoursArr([...coloursArr, getRandomColor()]);
+        setValue(id, allOptions);
     }, [allOptions]);
     function getRandomColor(): string {
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
+        const hue = Math.floor(Math.random() * 360);
+        const saturation = Math.floor(Math.random() * 30) + 70;
+        100;
+        const lightness = Math.floor(Math.random() * 20) + 70;
+
+        const color =
+            "hsl(" + hue + ", " + saturation + "%, " + lightness + "%)";
         return color;
     }
 
@@ -67,7 +70,6 @@ const Select = ({ options, id }: ISelectProps) => {
             <div className={styles.Select_Input_Wrapper}>
                 {allOptions.length > 0 &&
                     allOptions.map((opt, i) => {
-                        console.log("colours", coloursArr);
                         return (
                             <span
                                 className={styles.Select_Option}
@@ -86,10 +88,9 @@ const Select = ({ options, id }: ISelectProps) => {
                     list="tags"
                     id="tagChoice"
                     placeholder="Label"
-                    // onSelect={handleSelect}
-                    {...register(id, {
-                        onChange: (event) => handleChange(event),
-                    })}
+                    onSelect={handleChange}
+                    {...register(id)}
+                    multiple
                     ref={inputRef}
                 />
                 {displayAddBtn && (

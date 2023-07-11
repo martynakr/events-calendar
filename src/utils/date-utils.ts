@@ -81,3 +81,33 @@ export const generateDays = (year: number, month: number) => {
 
     return createNestedWeeksArr(arrWithNextDays);
 };
+
+export const isAfterToday = (date: string) => {
+    console.log(date, "date");
+    const today = new Date();
+    const eventDate = new Date(date);
+    today.setHours(0, 0, 0, 0);
+    eventDate.setHours(0, 0, 0, 0);
+    console.log(eventDate >= today);
+    return eventDate >= today;
+};
+
+export const isNotFirstEventDay = (day: Date, ev: any) => {
+    return (
+        new Date(ev.startDay).toLocaleDateString() !==
+            day.toLocaleDateString() &&
+        new Date(ev.startDay) < day &&
+        new Date(ev.endDay) >= day
+    );
+};
+
+export const convertToInputString = (date: Date) => {
+    const localDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    );
+    const offset = date.getTimezoneOffset();
+    const adjustedDate = new Date(localDate.getTime() - offset * 60 * 1000);
+    return adjustedDate.toISOString().substring(0, 10);
+};

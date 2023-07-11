@@ -1,0 +1,13 @@
+@use "../../assets/pallete.scss" as *;
+
+.EventCard {
+    font-size: 12px;
+    background-color: $aquablue;
+
+    &_MiddleDay {
+        width: 150%;
+        height: 24px;
+        display: flex;
+        align-items: center;
+    }
+}

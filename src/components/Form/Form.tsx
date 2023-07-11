@@ -1,32 +1,24 @@
-import { ReactNode } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import {
+    BaseSyntheticEvent,
+    FormEventHandler,
+    ReactNode,
+    useContext,
+    useEffect,
+} from "react";
 import styles from "./Form.module.scss";
-
-interface IDefaults {
-    startDate: string;
-    startHour: string;
-    finishHour: string;
-}
 
 interface IFormProps {
     children: ReactNode;
-    onSubmit: (data: any) => unknown;
-    defaults: IDefaults;
+    onSubmit: (
+        e?: BaseSyntheticEvent<object, any, any> | undefined
+    ) => Promise<void>;
 }
 
-const Form = ({ children, onSubmit, defaults }: IFormProps) => {
-    const methods = useForm({
-        defaultValues: defaults,
-    });
+const Form = ({ children, onSubmit }: IFormProps) => {
     return (
-        <FormProvider {...methods}>
-            <form
-                onSubmit={methods.handleSubmit(onSubmit)}
-                className={styles.Form}
-            >
-                {children}
-            </form>
-        </FormProvider>
+        <form onSubmit={onSubmit} className={styles.Form}>
+            {children}
+        </form>
     );
 };
 
