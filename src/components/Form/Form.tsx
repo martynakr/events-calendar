@@ -1,17 +1,9 @@
-import {
-    BaseSyntheticEvent,
-    FormEventHandler,
-    ReactNode,
-    useContext,
-    useEffect,
-} from "react";
+import { FormEventHandler, ReactNode, useContext, useEffect } from "react";
 import styles from "./Form.module.scss";
 
 interface IFormProps {
     children: ReactNode;
-    onSubmit: (
-        e?: BaseSyntheticEvent<object, any, any> | undefined
-    ) => Promise<void>;
+    onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 const Form = ({ children, onSubmit }: IFormProps) => {
