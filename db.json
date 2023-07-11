@@ -26,6 +26,17 @@
       "eventName": "another event",
       "labels": [],
       "id": 4
+    },
+    {
+      "startDate": "2023-07-11",
+      "startHour": "14:15",
+      "finishHour": "15:15",
+      "endDate": "2023-07-11",
+      "eventName": "new event",
+      "labels": [
+        "sport"
+      ],
+      "id": 5
     }
   ]
 }

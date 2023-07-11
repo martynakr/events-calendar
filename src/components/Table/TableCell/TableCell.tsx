@@ -31,6 +31,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
     }, [events, currMonth]);
 
     const today = new Date();
+
     let classes =
         currMonth === dateInfo.getMonth()
             ? `${styles.TableCell}`
@@ -42,18 +43,19 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
     )
         classes += ` ${styles.TableCell_Today}`;
     return (
-        <td
-            className={classes}
-            onClick={() => {
-                onClick(dateInfo);
-                setClickedDay(dateInfo);
-            }}
-        >
-            <p>
-                {dateInfo.getDate().toString().length < 2
-                    ? "0" + dateInfo.getDate()
-                    : dateInfo.getDate()}
-            </p>
+        <td className={classes}>
+            <div
+                onClick={() => {
+                    onClick(dateInfo);
+                    setClickedDay(dateInfo);
+                }}
+            >
+                <p>
+                    {dateInfo.getDate().toString().length < 2
+                        ? "0" + dateInfo.getDate()
+                        : dateInfo.getDate()}
+                </p>
+            </div>
             {eventsForDay.length > 0 &&
                 eventsForDay.map((ev: any) => {
                     // const duartion =
@@ -64,7 +66,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                     // console.log(duartion, "duration", ev.name);
                     return (
                         <EventCard
-                            eventName={ev.eventName}
+                            event={ev}
                             key={ev.id}
                             isNotFirstEventDay={isNotFirstEventDay(
                                 dateInfo,

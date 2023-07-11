@@ -23,6 +23,7 @@ import Modal from "../../components/Modal/Modal";
 import Select from "../../components/Form/Select/Select";
 import Input from "../../components/Form/Input/Input";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
+import { ClickedEventContext } from "../../context/ClickedEventProvider";
 
 export interface IEvent {
     startDate: string;
@@ -36,7 +37,6 @@ export interface IEvent {
 const Calendar = () => {
     const [today, setToday] = useState<Date>(new Date());
     const [showModal, setShowModal] = useState<boolean>(false);
-    // const { updatedEvents, setUpdatedEvents } = useContext(EventsContext);
     const { clickedDay } = useContext(ClickedDayContext);
     // one state for all 3?
     const [currentMonthDays, setCurrentMonthDays] = useState<Date[][] | null>(
@@ -44,6 +44,10 @@ const Calendar = () => {
     );
     const [displayedMonth, setDisplayedMonth] = useState<number>(0);
     const [displayedYear, setDisplayedYear] = useState<number>(0);
+    const { setEvents, updatedEvents, setUpdatedEvents } =
+        useContext(EventsContext);
+    const { setClickedEvent, clickedEvent, setShowEventModal, showEventModal } =
+        useContext(ClickedEventContext);
 
     const defaults = {
         startDate: convertToInputString(clickedDay),
@@ -64,8 +68,7 @@ const Calendar = () => {
         eventName: "",
         labels: [],
     };
-    const { setEvents, updatedEvents, setUpdatedEvents } =
-        useContext(EventsContext);
+
     const methods = useForm({
         defaultValues: defaults,
     });
@@ -147,6 +150,9 @@ const Calendar = () => {
     };
     return (
         <div className={styles.Calendar}>
+            <Modal show={showEventModal} setShow={setShowEventModal}>
+                {clickedEvent && <h3>{clickedEvent.eventName}</h3>}
+            </Modal>
             <Modal show={showModal} setShow={setShowModal}>
                 <h2>Create a new event</h2>
                 <FormProvider {...methods}>
