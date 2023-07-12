@@ -37,6 +37,17 @@
         "sport"
       ],
       "id": 5
+    },
+    {
+      "startDate": "2023-07-21",
+      "startHour": "17:25",
+      "finishHour": "18:25",
+      "endDate": "2023-07-21",
+      "eventName": "some event",
+      "labels": [
+        "sport"
+      ],
+      "id": 6
     }
   ]
 }

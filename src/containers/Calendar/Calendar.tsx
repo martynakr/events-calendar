@@ -9,21 +9,12 @@ import Table from "../../components/Table/Table";
 import TableHead from "../../components/Table/TableHead/TableHead";
 import TableBody from "../../components/Table/TableBody/TableBody";
 import { useContext, useEffect, useState } from "react";
-import { createEvent, getEvents } from "../../services/services";
+import { getEvents } from "../../services/services";
 import { EventsContext } from "../../context/EventsContext";
-import {
-    convertToInputString,
-    generateDays,
-    isAfterToday,
-} from "../../utils/date-utils";
+import { generateDays } from "../../utils/date-utils";
 import styles from "./Calendar.module.scss";
-import { FormProvider, useForm } from "react-hook-form";
-import Form from "../../components/Form/Form";
-import Modal from "../../components/Modal/Modal";
-import Select from "../../components/Form/Select/Select";
-import Input from "../../components/Form/Input/Input";
-import { ClickedDayContext } from "../../context/ClickedDayProvider";
-import { ClickedEventContext } from "../../context/ClickedEventProvider";
+import AddEventModal from "../AddEventModal/AddEventModal";
+import EventDetailsModal from "../EventDetailsModal/EventDetailsModal";
 
 export interface IEvent {
     startDate: string;
@@ -37,62 +28,12 @@ export interface IEvent {
 const Calendar = () => {
     const [today, setToday] = useState<Date>(new Date());
     const [showModal, setShowModal] = useState<boolean>(false);
-    const { clickedDay } = useContext(ClickedDayContext);
-    // one state for all 3?
     const [currentMonthDays, setCurrentMonthDays] = useState<Date[][] | null>(
         null
     );
     const [displayedMonth, setDisplayedMonth] = useState<number>(0);
     const [displayedYear, setDisplayedYear] = useState<number>(0);
-    const { setEvents, updatedEvents, setUpdatedEvents } =
-        useContext(EventsContext);
-    const { setClickedEvent, clickedEvent, setShowEventModal, showEventModal } =
-        useContext(ClickedEventContext);
-
-    const defaults = {
-        startDate: convertToInputString(clickedDay),
-        startHour: new Date().toLocaleTimeString("en-AU", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: false,
-        }),
-        finishHour: new Date(Date.now() + 60 * 60 * 1000).toLocaleTimeString(
-            "en-AU",
-            {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: false,
-            }
-        ),
-        endDate: convertToInputString(clickedDay),
-        eventName: "",
-        labels: [],
-    };
-
-    const methods = useForm({
-        defaultValues: defaults,
-    });
-
-    const {
-        setValue,
-        formState: { isSubmitSuccessful },
-        reset,
-    } = methods;
-
-    const onFormSubmit = async (data: IEvent) => {
-        await createEvent(data);
-        setShowModal(false);
-    };
-
-    useEffect(() => {
-        setUpdatedEvents(updatedEvents + 1);
-        reset({ ...defaults });
-    }, [isSubmitSuccessful]);
-
-    useEffect(() => {
-        setValue("startDate", convertToInputString(clickedDay));
-        setValue("endDate", convertToInputString(clickedDay));
-    }, [clickedDay]);
+    const { setEvents, updatedEvents } = useContext(EventsContext);
 
     useEffect(() => {
         getEvents().then((res) => {
@@ -150,73 +91,8 @@ const Calendar = () => {
     };
     return (
         <div className={styles.Calendar}>
-            <Modal show={showEventModal} setShow={setShowEventModal}>
-                {clickedEvent && <h3>{clickedEvent.eventName}</h3>}
-            </Modal>
-            <Modal show={showModal} setShow={setShowModal}>
-                <h2>Create a new event</h2>
-                <FormProvider {...methods}>
-                    <Form onSubmit={onFormSubmit}>
-                        <Input
-                            labelText="Event name"
-                            type="text"
-                            id="eventName"
-                            validation={{
-                                required: {
-                                    value: true,
-                                    message: "Event name is required",
-                                },
-                            }}
-                        />
-                        <div className={styles.container}>
-                            <Input
-                                labelText="Start Date"
-                                type="date"
-                                id="startDate"
-                                validation={{
-                                    validate: {
-                                        afterToday: (value: string) =>
-                                            isAfterToday(value) ||
-                                            "Cannot create events in the past",
-                                    },
-                                }}
-                            />
-                            <Input
-                                labelText="Start Time"
-                                type="time"
-                                id="startHour"
-                            />
-                        </div>
-                        <div className={styles.container}>
-                            <Input
-                                labelText="End Date"
-                                type="date"
-                                id="endDate"
-                            />
-                            <Input
-                                type="time"
-                                id="finishHour"
-                                labelText="End Time"
-                            />
-                        </div>
-                        <Select options={["sport", "fun"]} id="labels" />
-                        <div>
-                            <Button
-                                variant={ButtonVariant.SECONDARY}
-                                type="reset"
-                            >
-                                Clear
-                            </Button>
-                            <Button
-                                variant={ButtonVariant.PRIMARY}
-                                type="submit"
-                            >
-                                Create
-                            </Button>
-                        </div>
-                    </Form>
-                </FormProvider>
-            </Modal>
+            <AddEventModal setShowModal={setShowModal} showModal={showModal} />
+            <EventDetailsModal />
             <Nav onClick={handleTodayClick} />
             <div className={styles.Calendar_Container}>
                 <Button

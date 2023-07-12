@@ -111,3 +111,7 @@ export const convertToInputString = (date: Date) => {
     const adjustedDate = new Date(localDate.getTime() - offset * 60 * 1000);
     return adjustedDate.toISOString().substring(0, 10);
 };
+
+export const countdown = (startDate: Date) => {
+    const today = new Date();
+};
