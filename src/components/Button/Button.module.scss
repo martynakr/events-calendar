@@ -1,4 +1,5 @@
 @use "../../assets/pallete.scss" as *;
+@use "../../assets/mixins.scss" as *;
 
 .Button {
     font-size: 18px;
@@ -8,6 +9,10 @@
     width: 100%;
     margin: 15px 0;
 
+    @include tablet-below {
+        margin: 0;
+    }
+
     &_Primary {
         background-color: $aquablue;
         color: white;
@@ -16,7 +21,6 @@
     &_Secondary {
         background-color: transparent;
         color: $aquablue;
-        margin-right: 10px;
     }
 
     &_Icon {
@@ -25,6 +29,12 @@
         height: 50px;
         width: 50px;
         font-size: 40px;
+
+        @include tablet-below {
+            font-size: 20px;
+            height: 35px;
+            width: 35px;
+        }
 
         &:hover {
             background-color: $aquablue;

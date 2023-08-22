@@ -1,4 +1,5 @@
 @use "../../assets/pallete.scss" as *;
+@use "../../assets/mixins.scss" as *;
 
 .Modal {
     position: fixed;
@@ -19,10 +20,14 @@
 
     &_Background {
         background-color: white;
-        width: 40%;
+        width: 50%;
         padding: 20px;
         text-align: right;
         padding-bottom: 60px;
+
+        @include tablet-below {
+            width: 80%;
+        }
     }
 
     &_Content {

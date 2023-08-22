@@ -4,6 +4,7 @@ import { EventsContext } from "../../../context/EventsContext";
 import EventCard from "../../EventCard/EventCard";
 import { isNotFirstEventDay } from "../../../utils/date-utils";
 import { ClickedDayContext } from "../../../context/ClickedDayProvider";
+import { WindowSizeContext } from "../../../context/WindowSizeProvider";
 
 interface ITableCellProps {
     dateInfo: Date;
@@ -14,6 +15,7 @@ interface ITableCellProps {
 const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
     const [eventsForDay, setEventsForDay] = useState<any>([]);
     const { events } = useContext(EventsContext);
+    const { isTabletAndBelow } = useContext(WindowSizeContext);
     const { setClickedDay } = useContext(ClickedDayContext);
 
     useEffect(() => {
@@ -42,7 +44,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
         dateInfo.setHours(0, 0, 0, 0).toLocaleString()
     )
         classes += ` ${styles.TableCell_Today}`;
-    return (
+    return !isTabletAndBelow ? (
         <td className={classes}>
             <div
                 onClick={() => {
@@ -76,6 +78,17 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                         />
                     );
                 })}
+        </td>
+    ) : (
+        <td className={classes} onClick={() => setClickedDay(dateInfo)}>
+            <p>
+                {dateInfo.getDate().toString().length < 2
+                    ? "0" + dateInfo.getDate()
+                    : dateInfo.getDate()}
+            </p>
+            {eventsForDay.length > 0 && (
+                <div className={styles.TableCell_Small_Event}></div>
+            )}
         </td>
     );
 };

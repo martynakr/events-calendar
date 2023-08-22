@@ -1,5 +1,11 @@
+@use "../../assets/mixins.scss" as *;
+
 .Table {
     border-collapse: separate;
     border-spacing: 30px;
     width: 90%;
+
+    @include tablet-below {
+        border-spacing: 8px;
+    }
 }

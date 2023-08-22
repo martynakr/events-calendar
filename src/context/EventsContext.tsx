@@ -21,7 +21,7 @@ interface IContextProps {
 const EventsContextProvider = ({ children }: IContextProps) => {
     const [events, setEvents] = useState<IEvent[] | null>(null);
     const [updatedEvents, setUpdatedEvents] = useState<number>(0);
-    console.log(updatedEvents, "updated events from context");
+
     return (
         <EventsContext.Provider
             value={{ events, setEvents, updatedEvents, setUpdatedEvents }}

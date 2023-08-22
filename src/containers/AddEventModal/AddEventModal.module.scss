@@ -1,6 +1,12 @@
+@use "../../assets/mixins.scss" as *;
+
 .Container {
     display: flex;
     justify-content: space-between;
     width: 100%;
     gap: 10px;
+
+    @include tablet-below {
+        flex-direction: column;
+    }
 }

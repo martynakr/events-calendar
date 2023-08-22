@@ -4,6 +4,7 @@ import Nav from "../../components/Nav/Nav";
 import {
     faChevronLeft,
     faChevronRight,
+    faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import Table from "../../components/Table/Table";
 import TableHead from "../../components/Table/TableHead/TableHead";
@@ -15,6 +16,9 @@ import { generateDays } from "../../utils/date-utils";
 import styles from "./Calendar.module.scss";
 import AddEventModal from "../AddEventModal/AddEventModal";
 import EventDetailsModal from "../EventDetailsModal/EventDetailsModal";
+import { WindowSizeContext } from "../../context/WindowSizeProvider";
+import { ClickedDayContext } from "../../context/ClickedDayProvider";
+import EventCard from "../../components/EventCard/EventCard";
 
 export interface IEvent {
     startDate: string;
@@ -33,7 +37,10 @@ const Calendar = () => {
     );
     const [displayedMonth, setDisplayedMonth] = useState<number>(0);
     const [displayedYear, setDisplayedYear] = useState<number>(0);
-    const { setEvents, updatedEvents } = useContext(EventsContext);
+    const { setEvents, updatedEvents, events } = useContext(EventsContext);
+    const { isTabletAndBelow } = useContext(WindowSizeContext);
+    const [eventsForDay, setEventsForDay] = useState<any>([]);
+    const { clickedDay } = useContext(ClickedDayContext);
 
     useEffect(() => {
         getEvents().then((res) => {
@@ -88,6 +95,20 @@ const Calendar = () => {
             setDisplayedYear(today.getFullYear());
         }
     };
+
+    useEffect(() => {
+        if (events) {
+            const filteredEvents = events.filter((ev: any) => {
+                return (
+                    new Date(ev.startDate).toLocaleDateString() ===
+                        clickedDay.toLocaleDateString() ||
+                    (new Date(ev.startDate) <= clickedDay &&
+                        new Date(ev.endDate) >= clickedDay)
+                );
+            });
+            setEventsForDay(filteredEvents);
+        }
+    }, [clickedDay]);
     return (
         <div className={styles.Calendar}>
             <AddEventModal setShowModal={setShowModal} showModal={showModal} />
@@ -128,6 +149,25 @@ const Calendar = () => {
                         onClick={handleCellClick}
                     />
                 </Table>
+            )}
+            {isTabletAndBelow && (
+                <div>
+                    <div className={styles.Calendar_Container}>
+                        <h3>Events for {clickedDay.toLocaleDateString()}</h3>
+                        <Button
+                            variant={ButtonVariant.ICON}
+                            onClick={() => setShowModal(true)}
+                        >
+                            {" "}
+                            <FontAwesomeIcon icon={faPlus} />
+                        </Button>
+                    </div>
+                    {eventsForDay.length > 0 &&
+                        eventsForDay.map((ev: any) => {
+                            return <EventCard event={ev} key={ev.id} />;
+                        })}
+                    {eventsForDay.length === 0 && <p>No events</p>}
+                </div>
             )}
         </div>
     );

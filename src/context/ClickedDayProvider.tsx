@@ -16,7 +16,6 @@ interface IContextProps {
 const ClickedDayProvider = ({ children }: IContextProps) => {
     const [clickedDay, setClickedDay] = useState<Date>(new Date());
 
-    console.log(clickedDay, "clicked day");
     return (
         <ClickedDayContext.Provider value={{ clickedDay, setClickedDay }}>
             {children}

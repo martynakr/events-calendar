@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import styles from "./EventCard.module.scss";
 import { ClickedEventContext } from "../../context/ClickedEventProvider";
 
 const EventCard = ({ event, isNotFirstEventDay }: any) => {
-    const { setShowEventModal, setClickedEvent, showEventModal } =
+    const { setShowEventModal, setClickedEvent } =
         useContext(ClickedEventContext);
     // return !isNotFirstEventDay ? (
     //     <div className={styles.EventCard}>
@@ -20,12 +20,8 @@ const EventCard = ({ event, isNotFirstEventDay }: any) => {
     const handleClick = () => {
         setShowEventModal(true);
         setClickedEvent(event);
-        console.log("clicked");
     };
 
-    useEffect(() => {
-        console.log("state updated");
-    }, [showEventModal]);
     return (
         <div className={styles.EventCard} onClick={handleClick}>
             <div>
