@@ -72,13 +72,12 @@ const Calendar = () => {
         setShowModal(true);
     };
 
+    // static data would be better?
     const daysOfWeek = currentMonthDays
         ? currentMonthDays[currentMonthDays.length - 1].map((date) =>
               date.toLocaleString("default", { weekday: "short" })
           )
         : [""];
-
-    // static data would be better?
 
     const handleTodayClick = () => {
         if (displayedMonth !== today.getMonth()) {

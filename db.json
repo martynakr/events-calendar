@@ -48,6 +48,43 @@
         "sport"
       ],
       "id": 6
+    },
+    {
+      "startDate": "2023-08-23",
+      "startHour": "20:14",
+      "finishHour": "23:14",
+      "endDate": "2023-08-23",
+      "eventName": "Movie night",
+      "labels": [
+        "fun"
+      ],
+      "id": 7
+    },
+    {
+      "startDate": "2023-08-23",
+      "startHour": "13:04",
+      "finishHour": "15:04",
+      "endDate": "2023-08-23",
+      "eventName": "walk in the park",
+      "labels": [
+        "sport",
+        "fun"
+      ],
+      "id": 8
+    }
+  ],
+  "labels": [
+    {
+      "id": 1,
+      "name": "sport"
+    },
+    {
+      "id": 2,
+      "name": "work"
+    },
+    {
+      "id": 3,
+      "name": "family time"
     }
   ]
 }

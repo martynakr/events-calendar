@@ -49,6 +49,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                     onClick(dateInfo);
                     setClickedDay(dateInfo);
                 }}
+                className={styles.TableCell_Clickable_Div}
             >
                 <p>
                     {dateInfo.getDate().toString().length < 2

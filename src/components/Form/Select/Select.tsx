@@ -53,7 +53,7 @@ const Select = ({ options, id }: ISelectProps) => {
         setValue(id, allOptions);
     }, [allOptions]);
 
-    function getRandomColor(): string {
+    const getRandomColor = () => {
         const hue = Math.floor(Math.random() * 360);
         const saturation = Math.floor(Math.random() * 30) + 70;
         100;
@@ -62,31 +62,16 @@ const Select = ({ options, id }: ISelectProps) => {
         const color =
             "hsl(" + hue + ", " + saturation + "%, " + lightness + "%)";
         return color;
-    }
+    };
 
     const handleRemoveOption = (e: any) => {
         setAllOptions(allOptions.filter((opt) => opt !== e.target.id));
     };
 
     return (
-        <div>
+        <div className={styles.Select}>
             <label htmlFor="">Select tags: </label>
             <div className={styles.Select_Input_Wrapper}>
-                {allOptions.length > 0 &&
-                    allOptions.map((opt, i) => {
-                        return (
-                            <span
-                                className={styles.Select_Option}
-                                key={opt}
-                                style={{ backgroundColor: coloursArr[i] }}
-                            >
-                                {opt}{" "}
-                                <button id={opt} onClick={handleRemoveOption}>
-                                    x
-                                </button>
-                            </span>
-                        );
-                    })}
                 <input
                     className={styles.Select_Input}
                     list="tags"
@@ -105,16 +90,29 @@ const Select = ({ options, id }: ISelectProps) => {
                 <datalist id="tags">
                     {options.map((opt) => {
                         return (
-                            <option
-                                key={opt}
-                                value={opt}
-                                // onClick={handleOptionClick}
-                            >
+                            <option key={opt} value={opt}>
                                 {opt}
                             </option>
                         );
                     })}
                 </datalist>
+            </div>
+            <div className={styles.Select_Options}>
+                {allOptions.length > 0 &&
+                    allOptions.map((opt, i) => {
+                        return (
+                            <div
+                                className={styles.Select_Option}
+                                key={opt}
+                                style={{ backgroundColor: coloursArr[i] }}
+                            >
+                                {opt}{" "}
+                                <button id={opt} onClick={handleRemoveOption}>
+                                    x
+                                </button>
+                            </div>
+                        );
+                    })}
             </div>
         </div>
     );

@@ -5,6 +5,9 @@
     padding: 5px 10px;
     border: 3px solid $aquablue;
     font-weight: bold;
+    width: 100%;
+    margin: 15px 0;
+
     &_Primary {
         background-color: $aquablue;
         color: white;
@@ -13,9 +16,7 @@
     &_Secondary {
         background-color: transparent;
         color: $aquablue;
-    }
-
-    &_Tertiary {
+        margin-right: 10px;
     }
 
     &_Icon {

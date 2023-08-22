@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { convertToInputString, isAfterToday } from "../../utils/date-utils";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import Modal from "../../components/Modal/Modal";
@@ -9,7 +9,7 @@ import Form from "../../components/Form/Form";
 import Input from "../../components/Form/Input/Input";
 import Button, { ButtonVariant } from "../../components/Button/Button";
 import Select from "../../components/Form/Select/Select";
-import styles from "../Calendar/Calendar.module.scss";
+import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
 
 interface IAddEventModalProps {
@@ -49,6 +49,7 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
         setValue,
         formState: { isSubmitSuccessful },
         reset,
+        watch,
     } = methods;
 
     const onFormSubmit = async (data: IEvent) => {
@@ -65,6 +66,15 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
         setValue("startDate", convertToInputString(clickedDay));
         setValue("endDate", convertToInputString(clickedDay));
     }, [clickedDay]);
+
+    const handleClearClick = () => {
+        reset({ ...defaults });
+    };
+
+    useEffect(() => {
+        reset({ ...defaults });
+    }, [showModal]);
+
     return (
         <Modal show={showModal} setShow={setShowModal}>
             <h2>Create a new event</h2>
@@ -81,7 +91,7 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
                             },
                         }}
                     />
-                    <div className={styles.container}>
+                    <div className={styles.Container}>
                         <Input
                             labelText="Start Date"
                             type="date"
@@ -100,8 +110,27 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
                             id="startHour"
                         />
                     </div>
-                    <div className={styles.container}>
-                        <Input labelText="End Date" type="date" id="endDate" />
+                    <div className={styles.Container}>
+                        <Input
+                            labelText="End Date"
+                            type="date"
+                            id="endDate"
+                            validation={{
+                                validate: {
+                                    afterStartDate: (value: string) => {
+                                        if (
+                                            watch("startDate") > value ||
+                                            (watch("startDate") === value &&
+                                                watch("finishHour") <
+                                                    watch("startHour"))
+                                        ) {
+                                            return "End date must be after the start date";
+                                        }
+                                        return true;
+                                    },
+                                },
+                            }}
+                        />
                         <Input
                             type="time"
                             id="finishHour"
@@ -109,8 +138,11 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
                         />
                     </div>
                     <Select options={["sport", "fun"]} id="labels" />
-                    <div>
-                        <Button variant={ButtonVariant.SECONDARY} type="reset">
+                    <div className={styles.Container}>
+                        <Button
+                            variant={ButtonVariant.SECONDARY}
+                            onClick={handleClearClick}
+                        >
                             Clear
                         </Button>
                         <Button variant={ButtonVariant.PRIMARY} type="submit">

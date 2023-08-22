@@ -83,7 +83,6 @@ export const generateDays = (year: number, month: number) => {
 };
 
 export const isAfterToday = (date: string) => {
-    console.log(date, "date");
     const today = new Date();
     const eventDate = new Date(date);
     today.setHours(0, 0, 0, 0);
@@ -114,4 +113,20 @@ export const convertToInputString = (date: Date) => {
 
 export const countdown = (startDate: Date) => {
     const today = new Date();
+    const timeDiff = startDate.getTime() - today.getTime();
+
+    if (timeDiff < 0) {
+        throw new Error("Event already happened");
+        // return null;
+    }
+
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+        (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+    return { days, hours, minutes, seconds };
 };

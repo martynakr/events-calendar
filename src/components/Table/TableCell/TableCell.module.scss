@@ -22,4 +22,10 @@
         color: $aquablue;
         border-color: $aquablue;
     }
+
+    &_Clickable_Div {
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
