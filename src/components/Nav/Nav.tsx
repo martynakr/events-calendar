@@ -1,3 +1,5 @@
+import styles from "./Nav.module.scss";
+
 interface INavProps {
     onClick: () => unknown;
 }
@@ -5,7 +7,9 @@ interface INavProps {
 const Nav = ({ onClick }: INavProps) => {
     return (
         <div>
-            <a onClick={onClick}>TODAY</a>
+            <a onClick={onClick} className={styles.Link}>
+                TODAY
+            </a>
         </div>
     );
 };

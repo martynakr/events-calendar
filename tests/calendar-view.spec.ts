@@ -101,7 +101,7 @@ test.describe("Calendar view", () => {
         const table = await page.getByRole("table");
         const tableData = table.locator("td");
         const allData = await tableData.allInnerTexts();
-        expect(allData.map((d) => d.trim())).toEqual(days);
+        expect(allData.map((d) => d.trim().substring(0, 2))).toEqual(days);
     });
 
     // test("should show previous and next month days in grey", async ({

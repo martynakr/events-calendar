@@ -9,29 +9,38 @@ interface ISelectProps {
 
 const Select = ({ options, id }: ISelectProps) => {
     const { register, setValue } = useFormContext();
+    // button to add new options
     const [displayAddBtn, setDisplayAddBtn] = useState(false);
+
+    // all options selected
     const [allOptions, setAllOptions] = useState<string[]>([]);
+
+    // new option to be created, whatever the user is typing
     const [newOption, setNewOption] = useState("");
     const [coloursArr, setColoursArr] = useState<string[]>([]);
+    const [filteredOptions, setFilteredOptions] = useState<string[]>([
+        ...options,
+    ]);
+    const [displayOptList, setDisplayOptList] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const {
         formState: { isSubmitSuccessful },
     } = useFormContext();
 
     const handleChange = (e: any) => {
-        if (
-            options.filter((opt) => opt.includes(e.target.value)).length === 0
-        ) {
-            setDisplayAddBtn(true);
-            setNewOption(e.target.value);
-            return;
-        }
+        setNewOption(e.target.value);
+        console.log(e.target.value);
+        setFilteredOptions(
+            options.filter((opt) => opt.includes(e.target.value))
+        );
 
         if (
-            options.filter((opt) => opt === e.target.value).length &&
-            !allOptions.find((o) => o === e.target.value)
+            filteredOptions.filter((opt) => opt.includes(e.target.value))
+                .length === 0
         ) {
-            setAllOptions([...allOptions, e.target.value]);
+            setDisplayAddBtn(true);
+            setDisplayOptList(false);
+            return;
         }
 
         setDisplayAddBtn(false);
@@ -45,6 +54,7 @@ const Select = ({ options, id }: ISelectProps) => {
     const handleClick = () => {
         setDisplayAddBtn(false);
         setAllOptions([...allOptions, newOption]);
+        setNewOption("");
     };
 
     useEffect(() => {
@@ -68,26 +78,57 @@ const Select = ({ options, id }: ISelectProps) => {
         setAllOptions(allOptions.filter((opt) => opt !== e.target.id));
     };
 
+    const handleOptionClick = (opt: string) => {
+        setAllOptions([...allOptions, opt]);
+        // if (inputRef.current) {
+        //     inputRef.current.value = "";
+        // }
+    };
+
+    const handleInputSelect = () => {
+        setDisplayOptList(true);
+    };
+
     return (
         <div className={styles.Select}>
             <label htmlFor="">Select tags: </label>
             <div className={styles.Select_Input_Wrapper}>
                 <input
                     className={styles.Select_Input}
-                    list="tags"
                     id="tagChoice"
                     placeholder="Label"
-                    onSelect={handleChange}
                     {...register(id)}
-                    multiple
-                    ref={inputRef}
+                    onChange={handleChange}
+                    onSelect={handleInputSelect}
+                    value={newOption}
                 />
                 {displayAddBtn && (
-                    <button onClick={handleClick} type="button">
+                    <button
+                        className={styles.Select_CreateBtn}
+                        onClick={handleClick}
+                        type="button"
+                    >
                         Create
                     </button>
                 )}
-                <datalist id="tags">
+            </div>
+            {displayOptList && (
+                <div className={styles.Select_List}>
+                    {filteredOptions.map((opt, i) => {
+                        return (
+                            <p
+                                className={styles.Select_List_Option}
+                                key={Symbol(i).toString()}
+                                onClick={() => handleOptionClick(opt)}
+                            >
+                                {opt}
+                            </p>
+                        );
+                    })}
+                </div>
+            )}
+
+            {/* <datalist id="tags">
                     {options.map((opt) => {
                         return (
                             <option key={opt} value={opt}>
@@ -95,8 +136,8 @@ const Select = ({ options, id }: ISelectProps) => {
                             </option>
                         );
                     })}
-                </datalist>
-            </div>
+                </datalist> */}
+
             <div className={styles.Select_Options}>
                 {allOptions.length > 0 &&
                     allOptions.map((opt, i) => {
@@ -119,3 +160,8 @@ const Select = ({ options, id }: ISelectProps) => {
 };
 
 export default Select;
+
+// issues
+// list does'nt disappear
+// can still select the same label multiple times
+// selected label doesn't disappear from te list

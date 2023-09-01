@@ -46,7 +46,7 @@ const EventDetailsModal = () => {
                         {timeUntil.days} days : {timeUntil.hours} h :&nbsp;
                         {timeUntil.minutes} min : {timeUntil.seconds} s
                     </p>
-                    <p>unitl this event</p>
+                    <p>until this event</p>
                 </>
             )}
             {error && <p>This event already started</p>}
