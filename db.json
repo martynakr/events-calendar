@@ -71,6 +71,72 @@
         "fun"
       ],
       "id": 8
+    },
+    {
+      "startDate": "2024-06-04",
+      "startHour": "17:11",
+      "finishHour": "18:11",
+      "endDate": "2024-06-04",
+      "eventName": "new event",
+      "labels": "tag",
+      "id": 9
+    },
+    {
+      "startDate": "2024-06-05",
+      "startHour": "10:24",
+      "finishHour": "11:24",
+      "endDate": "2024-06-05",
+      "eventName": "new event",
+      "labels": [
+        {
+          "name": "sport",
+          "id": 1
+        },
+        {
+          "name": "fun",
+          "id": 2
+        }
+      ],
+      "id": 10
+    },
+    {
+      "startDate": "2024-06-05",
+      "startHour": "17:03",
+      "finishHour": "18:03",
+      "endDate": "2024-06-05",
+      "eventName": "evennnt",
+      "labels": {
+        "name": "hello"
+      },
+      "id": 11
+    },
+    {
+      "startDate": "2024-06-06",
+      "startHour": "17:04",
+      "finishHour": "18:04",
+      "endDate": "2024-06-06",
+      "eventName": "somethign",
+      "labels": [],
+      "id": 12
+    },
+    {
+      "startDate": "2024-06-24",
+      "startHour": "17:06",
+      "finishHour": "18:06",
+      "endDate": "2024-06-24",
+      "eventName": "rest",
+      "labels": [
+        {
+          "name": "hello"
+        },
+        {
+          "name": "sport"
+        },
+        {
+          "name": "fun"
+        }
+      ],
+      "id": 13
     }
   ],
   "labels": [

@@ -52,8 +52,6 @@ test.describe("Calendar view", () => {
         const updatedHeading = await page.getByRole("heading");
         const updatedAllText = await updatedHeading.innerText();
         expect(updatedAllText).toContain(nextMonthName);
-
-        // if else for Jan and Dec to check the year as well?
     });
 
     test("should render a table with 7 columns with days of the week", async ({

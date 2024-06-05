@@ -8,9 +8,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Form/Input/Input";
 import Button, { ButtonVariant } from "../../components/Button/Button";
-import Select from "../../components/Form/Select/Select";
+import Select from "../../components/Form/Select/Multiselect";
 import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
+import Multiselect from "../../components/Form/Select/Multiselect";
+import HookFormMultiselect from "../../components/Form/Select/HookFormMultiselect.tsx/HookFormMultiselect";
 
 interface IAddEventModalProps {
     showModal: boolean;
@@ -53,6 +55,7 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
     } = methods;
 
     const onFormSubmit = async (data: IEvent) => {
+        console.log(data, "DATA FROM FORM");
         await createEvent(data);
         setShowModal(false);
     };
@@ -137,7 +140,10 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
                             labelText="End Time"
                         />
                     </div>
-                    <Select options={["sport", "fun"]} id="labels" />
+                    <HookFormMultiselect
+                        options={[{ name: "sport" }, { name: "fun" }]}
+                        id="labels"
+                    />
                     <div className={styles.Container}>
                         <Button
                             variant={ButtonVariant.SECONDARY}
