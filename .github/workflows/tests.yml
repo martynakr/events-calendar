@@ -21,12 +21,5 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Run React Testing Library tests
+            - name: Run React Testing Library and unit tests
               run: npm test
-
-            - uses: actions/upload-artifact@v3
-              if: always()
-              with:
-                  name: test-report
-                  path: test-report/
-                  retention-days: 30
