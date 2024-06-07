@@ -22,7 +22,7 @@ jobs:
               run: npm ci
 
             - name: Run React Testing Library tests
-              run: npm test -- --watchAll=false
+              run: npm test
 
             - uses: actions/upload-artifact@v3
               if: always()
