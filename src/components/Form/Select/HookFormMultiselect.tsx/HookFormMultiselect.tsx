@@ -1,10 +1,15 @@
 import { useFormContext } from "react-hook-form";
-import Multiselect from "../Multiselect";
+import Multiselect, { Option } from "../Multiselect";
 
-const HookFormMultiselect = ({ options, id }: any) => {
+interface HookFormMultiselectProps {
+    options: Option[];
+    id: string;
+}
+
+const HookFormMultiselect = ({ options, id }: HookFormMultiselectProps) => {
     const { setValue } = useFormContext();
 
-    const onSelectedOptionsChange = (val: any) => {
+    const onSelectedOptionsChange = (val: Option | Option[]) => {
         setValue(id, val);
     };
 
@@ -13,6 +18,7 @@ const HookFormMultiselect = ({ options, id }: any) => {
             <Multiselect
                 options={options}
                 id={id}
+                // make this prop optional
                 onNewOptionSubmit={() => {
                     console.log("");
                 }}

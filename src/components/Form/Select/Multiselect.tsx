@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useEffect, useState } from "react";
 import styles from "./Multiselect.module.scss";
 
-interface Option {
+export interface Option {
     name: string;
 }
 
@@ -11,9 +10,10 @@ interface ChipProps {
     onClick: (option: Option) => unknown;
 }
 
-// MOVE BACKGROUND COLOUR GENERATING TO BACKEND
+// MOVE BACKGROUND COLOUR GENERATING TO BACKEND?
+// add more logic to not allow for creating of the same option twice
 
-interface ISelectProps {
+interface SelectProps {
     options: Option[];
     id: string;
     // what to do when it's in a form
@@ -25,7 +25,7 @@ interface ISelectProps {
 
 const Chip = ({ option, onClick }: ChipProps) => {
     return (
-        <div>
+        <div role="selected-option">
             <span>{option.name}</span>
             <button
                 onClick={(e) => {
@@ -44,7 +44,7 @@ const Multiselect = ({
     id,
     onNewOptionSubmit,
     onSelectedOptionsChange,
-}: ISelectProps) => {
+}: SelectProps) => {
     // clean up options to only get unique values just in case
     const unique = [...new Set(options)];
     const [allOptions, setAllOptions] = useState<Option[]>(unique);
@@ -86,22 +86,29 @@ const Multiselect = ({
     }, [allOptions]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value === "" && showAddBtn) {
+        if (
+            (e.target.value === "" && showAddBtn) ||
+            allOptions.filter((opt: Option) => opt.name === e.target.value)
+                .length > 0
+        ) {
             setShowAddBtn(false);
         }
 
-        const filtered = filteredOptions.filter((opt: Option) =>
+        const filtered = allOptions.filter((opt: Option) =>
             opt.name.includes(e.target.value)
         );
         setFilteredOptions(filtered);
         setNewOption(e.target.value);
 
-        if (e.target.value.length > 0) setShowAddBtn(true);
+        if (
+            e.target.value.length > 0 &&
+            allOptions.filter((opt: Option) => opt.name === e.target.value)
+                .length === 0
+        )
+            setShowAddBtn(true);
     };
 
-    useEffect(() => {}, [selectedOptions]);
-
-    const handleAddBtnClick = (e: any) => {
+    const handleAddBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setShowAddBtn(false);
         setAllOptions([...allOptions, { name: newOption }]);
@@ -148,10 +155,14 @@ const Multiselect = ({
             </div>
             {/* move to OptionsList element */}
             {showOptions && (
-                <div className={styles.Select_List}>
+                <div className={styles.Select_List} role="filtered-options">
                     {filteredOptions.map((option: Option) => {
                         return (
-                            <p key={option.name} onClick={handleOptionClick}>
+                            <p
+                                key={option.name}
+                                onClick={handleOptionClick}
+                                role="option"
+                            >
                                 {option.name}
                             </p>
                         );
