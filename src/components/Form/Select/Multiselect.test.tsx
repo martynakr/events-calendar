@@ -64,7 +64,6 @@ describe("Mulitselect component tests", () => {
         await user.click(addBtn);
         const selectedOptions = screen.getAllByRole("selected-option");
         expect(selectedOptions).toHaveLength(1);
-        // screen.debug();
         expect(selectedOptions[0].children[0]).toHaveTextContent("black");
     });
 

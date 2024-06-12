@@ -2,16 +2,14 @@ import { useContext, useEffect } from "react";
 import { convertToInputString, isAfterToday } from "../../utils/date-utils";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import Modal from "../../components/Modal/Modal";
-import { IEvent } from "../Calendar/Calendar";
+import { Event } from "../Calendar/Calendar";
 import { createEvent } from "../../services/services";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Form/Input/Input";
 import Button, { ButtonVariant } from "../../components/Button/Button";
-import Select from "../../components/Form/Select/Multiselect";
 import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
-import Multiselect from "../../components/Form/Select/Multiselect";
 import HookFormMultiselect from "../../components/Form/Select/HookFormMultiselect.tsx/HookFormMultiselect";
 
 interface IAddEventModalProps {
@@ -54,7 +52,7 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
         watch,
     } = methods;
 
-    const onFormSubmit = async (data: IEvent) => {
+    const onFormSubmit = async (data: Event) => {
         console.log(data, "DATA FROM FORM");
         await createEvent(data);
         setShowModal(false);

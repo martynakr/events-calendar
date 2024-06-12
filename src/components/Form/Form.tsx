@@ -1,14 +1,13 @@
-import { FormEventHandler, ReactNode, useContext, useEffect } from "react";
+import { ReactNode } from "react";
 import styles from "./Form.module.scss";
-import { IEvent } from "../../containers/Calendar/Calendar";
 import { useFormContext } from "react-hook-form";
 
-interface IFormProps {
+interface FormProps {
     children: ReactNode;
-    onSubmit: (data: IEvent) => Promise<unknown>;
+    onSubmit: (data: any) => Promise<unknown>;
 }
 
-const Form = ({ children, onSubmit }: IFormProps) => {
+const Form = ({ children, onSubmit }: FormProps) => {
     const { handleSubmit } = useFormContext();
 
     const handleFormSubmit = async (data: any) => {
@@ -16,9 +15,14 @@ const Form = ({ children, onSubmit }: IFormProps) => {
     };
 
     return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.Form}>
-            {children}
-        </form>
+        <>
+            <form
+                onSubmit={handleSubmit(handleFormSubmit)}
+                className={styles.Form}
+            >
+                {children}
+            </form>
+        </>
     );
 };
 
