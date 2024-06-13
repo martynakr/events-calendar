@@ -11,6 +11,7 @@ import Button, { ButtonVariant } from "../../components/Button/Button";
 import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
 import HookFormMultiselect from "../../components/Form/Select/HookFormMultiselect.tsx/HookFormMultiselect";
+import { AuthContext } from "../../context/AuthProvider";
 
 interface IAddEventModalProps {
     showModal: boolean;
@@ -20,6 +21,7 @@ interface IAddEventModalProps {
 const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
     const { clickedDay } = useContext(ClickedDayContext);
     const { updatedEvents, setUpdatedEvents } = useContext(EventsContext);
+    const { token } = useContext(AuthContext);
 
     const defaults = {
         startDate: convertToInputString(clickedDay),
@@ -54,8 +56,28 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
 
     const onFormSubmit = async (data: Event) => {
         console.log(data, "DATA FROM FORM");
-        await createEvent(data);
-        setShowModal(false);
+        const {
+            startDate,
+            startHour,
+            endDate,
+            finishHour,
+            eventName,
+            ...rest
+        } = data;
+
+        const startDateTime = new Date(`${startDate} ${startHour}`);
+        const endDateTime = new Date(`${endDate} ${finishHour}`);
+        const dataToSend = {
+            name: eventName,
+            startDate: startDateTime.toISOString(),
+            endDate: endDateTime.toISOString(),
+            ...rest,
+        };
+        // transform data so it is good for the backend
+        if (token) {
+            await createEvent(dataToSend, token);
+            setShowModal(false);
+        }
     };
 
     useEffect(() => {

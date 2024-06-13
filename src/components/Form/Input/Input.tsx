@@ -2,13 +2,13 @@ import { InputHTMLAttributes, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import styles from "./Input.module.scss";
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     labelText: string;
     id: string;
     validation?: any;
 }
 
-const Input = ({ labelText, id, validation, ...rest }: IInputProps) => {
+const Input = ({ labelText, id, validation, ...rest }: InputProps) => {
     const {
         register,
         formState: { errors },

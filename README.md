@@ -30,7 +30,7 @@ The project contains:
 
 -   **10 June 2024** - the initial version of this application used a 'dummy' backend created with [JSON Server](https://www.npmjs.com/package/json-server). I started implementing [custom backed](https://github.com/martynakr/events-creator-backend) with Spring boot a while ago. I am currently working on the backend again and replaced the dummy server in this application with that backend
 
--   **11 June 2024** - added login and register pages set up with `react-router-dom`. I decided to user the `zod` library for validating for the login and register pages.
+-   **11 June 2024** - added login and register pages set up with `react-router-dom`. I decided to user the `zod` library for validating for the login and register pages. I found that the custom React Hook Form validation gets a bit hard to read with more complex logic - with zod it's easier to abstract it away to a separate file
 
 ## Known issues
 
@@ -38,6 +38,7 @@ The project contains:
 
 ## Next steps
 
+-   Update the login page, so it contains some info about the app, login form and a link that redirects users without an account to the register page
 -   Replacing the form validation for creating an event with zod
 -   Reviewing the amount of contexts used in the project
 -   Adding e2e Playwright tests

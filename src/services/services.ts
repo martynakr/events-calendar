@@ -10,33 +10,57 @@ export interface LoginData {
     password: string;
 }
 
+interface Label {
+    name: string;
+    // add id later
+}
+
+export interface EventData {
+    name: string;
+    startDate: Date;
+    endDate: Date;
+    labels: Label[];
+}
+
 const MAIN_URL = "http://localhost:8080";
 
-export const createEvent = async (data: any) => {
-    console.log(JSON.stringify(data));
-    const response = await fetch("http://localhost:3000/events", {
+export const createEvent = async (data: any, token: string) => {
+    console.log(data);
+    console.log(token, "TOKEN FROM CRETAE");
+    const response = await fetch(`${MAIN_URL}/events`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     });
-    console.log(await response.json());
-    // const back = await response.json();
-    // console.log(back);
+    console.log(response, "RESPONSE CREATE");
+
+    if (!response.ok) {
+        throw new Error("Could not create an event");
+    }
+
+    const createdEvent = await response.json();
+    return createdEvent;
 };
 
 export const getEvents = async (token: string) => {
-    const response = await fetch(`${MAIN_URL}/events`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    const response = await fetch(
+        `${MAIN_URL}/events`,
+        {
+            credentials: "include",
+        }
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // },
+    );
 
     if (!response.ok) {
         throw new Error("Could not fetch events");
     }
     const data = await response.json();
+    console.log(data, "EVENT DATA");
 
     return data;
 };
@@ -62,16 +86,20 @@ export const register = async (data: RegisterData) => {
 };
 
 export const login = async (data: LoginData) => {
+    console.log(data, "LOgin data");
     const response = await fetch(`${MAIN_URL}/auth/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     });
 
+    console.log(response.ok, "RESPONSE OKAY");
+
     if (!response.ok) {
         throw new Error("Could not login, try again");
     }
-    return await response.json();
+    //return await response.json();
 };

@@ -20,6 +20,7 @@ import { WindowSizeContext } from "../../context/WindowSizeProvider";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import EventCard from "../../components/EventCard/EventCard";
 import { AuthContext } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 export interface Event {
     startDate: string;
@@ -43,12 +44,17 @@ const Calendar = () => {
     const [eventsForDay, setEventsForDay] = useState<any>([]);
     const { clickedDay } = useContext(ClickedDayContext);
     const { token } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (token)
-            getEvents(token).then((res) => {
-                setEvents(res);
-            });
+        //if (token) {
+        getEvents("").then((res) => {
+            setEvents(res);
+        });
+        //} else {
+        //  navigate("/login");
+        //}
+
         // if not token redirect to login
     }, [updatedEvents]);
 

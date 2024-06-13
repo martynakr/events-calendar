@@ -15,8 +15,8 @@ const LoginPage = () => {
 
     const onFormSubmit = async (data: LoginData) => {
         try {
-            const token = await login(data);
-            setToken(token.token);
+            await login(data);
+            //setToken(token.token);
             navigate("/calendar");
         } catch (e) {
             setError("password", {

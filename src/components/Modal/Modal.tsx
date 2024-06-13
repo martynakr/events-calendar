@@ -3,13 +3,13 @@ import styles from "./Modal.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-interface IModalProps {
+interface ModalProps {
     children: ReactNode;
     show: boolean;
     setShow: (val: boolean) => unknown;
 }
 
-const Modal = ({ children, show, setShow }: IModalProps) => {
+const Modal = ({ children, show, setShow }: ModalProps) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const classes = show
         ? `${styles.Modal}`
