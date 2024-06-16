@@ -54,7 +54,7 @@ The project contains:
 ## Features
 
 -   Multi-select component inspired by the one found in Notion. In this project I am using it for event labels. The user can select a previously created label from a searchable list or add a new label by typing in a new option and clicking 'Add' button, that dynamically appears for non-existing options
-    // insert a gif here //
+
 -   Showing days from the next and previous months - this was a great opportunity to practice working with the JavaScript Date object
 -   Countdown until the event starts
 
