@@ -1,0 +1,46 @@
+@use "../../../assets/pallete" as *;
+@use "../../../assets/mixins" as *;
+.TableCell {
+    font-weight: bold;
+    font-size: 40px;
+    border-top: 4px solid black;
+    height: 200px;
+    width: 12%;
+    padding: 10px;
+    margin: 10px;
+    vertical-align: top;
+
+    @include tablet-below {
+        font-size: 16px;
+        padding: 3px;
+        margin: 3px;
+        height: 100px;
+    }
+
+    &:hover {
+        background-color: $aquablueTransparent;
+    }
+
+    &_Inactive {
+        color: rgb(194, 194, 194);
+        border-color: rgb(194, 194, 194);
+    }
+
+    &_Today {
+        color: $aquablue;
+        border-color: $aquablue;
+    }
+
+    &_Clickable_Div {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &_Small_Event {
+        height: 20px;
+        width: 20px;
+        border-radius: 30px;
+        background-color: $aquablue;
+    }
+}

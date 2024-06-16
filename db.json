@@ -1,0 +1,156 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "eventName": "Yoga session",
+      "startDate": "2023-07-12",
+      "endDate": "2023-07-12"
+    },
+    {
+      "id": 2,
+      "eventName": "Movie night",
+      "startDate": "2023-07-12",
+      "endDate": "2023-07-13"
+    },
+    {
+      "id": 3,
+      "eventName": "Multi day event",
+      "startDate": "2023-07-01",
+      "endDate": "2023-07-05"
+    },
+    {
+      "startDate": "2023-08-04",
+      "startHour": "13:59",
+      "finishHour": "14:59",
+      "endDate": "2023-08-04",
+      "eventName": "another event",
+      "labels": [],
+      "id": 4
+    },
+    {
+      "startDate": "2023-07-11",
+      "startHour": "14:15",
+      "finishHour": "15:15",
+      "endDate": "2023-07-11",
+      "eventName": "new event",
+      "labels": [
+        "sport"
+      ],
+      "id": 5
+    },
+    {
+      "startDate": "2023-07-21",
+      "startHour": "17:25",
+      "finishHour": "18:25",
+      "endDate": "2023-07-21",
+      "eventName": "some event",
+      "labels": [
+        "sport"
+      ],
+      "id": 6
+    },
+    {
+      "startDate": "2023-08-23",
+      "startHour": "20:14",
+      "finishHour": "23:14",
+      "endDate": "2023-08-23",
+      "eventName": "Movie night",
+      "labels": [
+        "fun"
+      ],
+      "id": 7
+    },
+    {
+      "startDate": "2023-08-23",
+      "startHour": "13:04",
+      "finishHour": "15:04",
+      "endDate": "2023-08-23",
+      "eventName": "walk in the park",
+      "labels": [
+        "sport",
+        "fun"
+      ],
+      "id": 8
+    },
+    {
+      "startDate": "2024-06-04",
+      "startHour": "17:11",
+      "finishHour": "18:11",
+      "endDate": "2024-06-04",
+      "eventName": "new event",
+      "labels": "tag",
+      "id": 9
+    },
+    {
+      "startDate": "2024-06-05",
+      "startHour": "10:24",
+      "finishHour": "11:24",
+      "endDate": "2024-06-05",
+      "eventName": "new event",
+      "labels": [
+        {
+          "name": "sport",
+          "id": 1
+        },
+        {
+          "name": "fun",
+          "id": 2
+        }
+      ],
+      "id": 10
+    },
+    {
+      "startDate": "2024-06-05",
+      "startHour": "17:03",
+      "finishHour": "18:03",
+      "endDate": "2024-06-05",
+      "eventName": "evennnt",
+      "labels": {
+        "name": "hello"
+      },
+      "id": 11
+    },
+    {
+      "startDate": "2024-06-06",
+      "startHour": "17:04",
+      "finishHour": "18:04",
+      "endDate": "2024-06-06",
+      "eventName": "somethign",
+      "labels": [],
+      "id": 12
+    },
+    {
+      "startDate": "2024-06-24",
+      "startHour": "17:06",
+      "finishHour": "18:06",
+      "endDate": "2024-06-24",
+      "eventName": "rest",
+      "labels": [
+        {
+          "name": "hello"
+        },
+        {
+          "name": "sport"
+        },
+        {
+          "name": "fun"
+        }
+      ],
+      "id": 13
+    }
+  ],
+  "labels": [
+    {
+      "id": 1,
+      "name": "sport"
+    },
+    {
+      "id": 2,
+      "name": "work"
+    },
+    {
+      "id": 3,
+      "name": "family time"
+    }
+  ]
+}

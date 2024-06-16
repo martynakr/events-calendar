@@ -1,0 +1,30 @@
+.Input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: left;
+
+    &_Error {
+        color: rgb(160, 7, 7);
+        background-color: rgb(255, 224, 224);
+        padding: 4px;
+        font-weight: bold;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    &_Label {
+        font-weight: bold;
+        margin-bottom: 4px;
+    }
+
+    &_Field {
+        padding: 4px;
+        height: 20px;
+
+        &_Margin_Right {
+            margin-right: 10px;
+        }
+    }
+}

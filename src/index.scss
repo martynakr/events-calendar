@@ -1,0 +1,22 @@
+@use "../src/assets/pallete.scss" as *;
+@use "../src/assets/mixins.scss" as *;
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+}
+
+h1 {
+    font-size: 56px;
+    text-align: center;
+    padding: 10px;
+
+    @include tablet-below {
+        font-size: 26px;
+    }
+}
