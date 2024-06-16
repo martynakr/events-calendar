@@ -17,6 +17,8 @@ const EventCard = ({ event, isNotFirstEventDay }: any) => {
     //     </div>
     // );
 
+    console.log(event, "");
+
     const handleClick = () => {
         setShowEventModal(true);
         setClickedEvent(event);
@@ -25,14 +27,10 @@ const EventCard = ({ event, isNotFirstEventDay }: any) => {
     return (
         <div className={styles.EventCard} onClick={handleClick}>
             <div>
-                <p>{event.eventName}</p>
+                <p>{event.name}</p>
             </div>
         </div>
     );
 };
 
 export default EventCard;
-// 300
-// 500
-
-//
