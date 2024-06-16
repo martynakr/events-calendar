@@ -33,6 +33,7 @@ export const createEvent = async (data: any) => {
     console.log(data);
     const response = await fetch(`${MAIN_URL}/events`, {
         method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
@@ -78,6 +79,7 @@ export const getLabels = async (): Promise<LabelFromBackend[]> => {
 export const register = async (data: RegisterData) => {
     const response = await fetch(`${MAIN_URL}/auth/register`, {
         method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
