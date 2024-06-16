@@ -3,6 +3,7 @@ import styles from "./Multiselect.module.scss";
 
 export interface Option {
     name: string;
+    // colour: string;
 }
 
 interface ChipProps {
@@ -16,12 +17,9 @@ interface ChipProps {
 interface SelectProps {
     options: Option[];
     id: string;
-    // what to do when it's in a form
     onNewOptionSubmit: (option: Option) => unknown;
     onSelectedOptionsChange?: (options: Option[]) => unknown;
 }
-
-// I want new option to persist
 
 const Chip = ({ option, onClick }: ChipProps) => {
     return (
@@ -46,20 +44,23 @@ const Multiselect = ({
     onSelectedOptionsChange,
 }: SelectProps) => {
     // clean up options to only get unique values just in case
-    const unique = [...new Set(options)];
-    const [allOptions, setAllOptions] = useState<Option[]>(unique);
+
+    const [allOptions, setAllOptions] = useState<Option[]>([]);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [showAddBtn, setShowAddBtn] = useState<boolean>(false);
-    const [filteredOptions, setFilteredOptions] = useState<Option[]>([
-        ...unique,
-        ...selectedOptions,
-    ]);
+    const [filteredOptions, setFilteredOptions] = useState<Option[]>([]);
     const [newOption, setNewOption] = useState<string>("");
 
     const handleInputClick = () => {
         if (!showOptions) setShowOptions(true);
     };
+
+    useEffect(() => {
+        const unique = [...new Set(options)];
+        setAllOptions([...unique]);
+        setFilteredOptions([...unique, ...selectedOptions]);
+    }, [options]);
 
     const handleOptionClick = (e: any) => {
         const isOptionSelected = selectedOptions.some(
@@ -129,7 +130,7 @@ const Multiselect = ({
 
     return (
         <div className={styles.Select}>
-            <label htmlFor="">Select tags: </label>
+            <label htmlFor={id}>Select tags: </label>
             <div className={styles.Select_Input_Wrapper}>
                 {selectedOptions.length > 0 && (
                     <>
@@ -157,11 +158,13 @@ const Multiselect = ({
             {showOptions && (
                 <div className={styles.Select_List} role="filtered-options">
                     {filteredOptions.map((option: Option) => {
+                        console.log(option, "option");
                         return (
                             <p
                                 key={option.name}
                                 onClick={handleOptionClick}
                                 role="option"
+                                className={styles.Select_List_Option}
                             >
                                 {option.name}
                             </p>

@@ -10,9 +10,14 @@ export interface LoginData {
     password: string;
 }
 
+export interface LabelFromBackend {
+    id: number;
+    name: string;
+    colour: string;
+}
+
 interface Label {
     name: string;
-    // add id later
 }
 
 export interface EventData {
@@ -24,14 +29,12 @@ export interface EventData {
 
 const MAIN_URL = "http://localhost:8080";
 
-export const createEvent = async (data: any, token: string) => {
+export const createEvent = async (data: any) => {
     console.log(data);
-    console.log(token, "TOKEN FROM CRETAE");
     const response = await fetch(`${MAIN_URL}/events`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     });
@@ -45,44 +48,46 @@ export const createEvent = async (data: any, token: string) => {
     return createdEvent;
 };
 
-export const getEvents = async (token: string) => {
-    const response = await fetch(
-        `${MAIN_URL}/events`,
-        {
-            credentials: "include",
-        }
-        // headers: {
-        //     Authorization: `Bearer ${token}`,
-        // },
-    );
+export const getEvents = async () => {
+    const response = await fetch(`${MAIN_URL}/events`, {
+        credentials: "include",
+    });
 
     if (!response.ok) {
         throw new Error("Could not fetch events");
     }
     const data = await response.json();
-    console.log(data, "EVENT DATA");
+    console.log(data, "EVENTS");
+    return data;
+};
+
+export const getLabels = async (): Promise<LabelFromBackend[]> => {
+    const response = await fetch(`${MAIN_URL}/labels`, {
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Could not fetch events");
+    }
+    const data = await response.json();
+    console.log(data, "labels");
 
     return data;
 };
 
 export const register = async (data: RegisterData) => {
-    try {
-        const response = await fetch(`${MAIN_URL}/auth/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-    } catch (e) {
-        console.log(e);
-        throw e;
-    }
+    const response = await fetch(`${MAIN_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
 
-    // if (!response.ok) {
-    //     throw new Error("Could not register, try again later");
-    // }
-    // const message = await response.json();
+    if (!response.ok) {
+        throw new Error("Could not register, try again later");
+    }
+    return response;
 };
 
 export const login = async (data: LoginData) => {
@@ -96,10 +101,9 @@ export const login = async (data: LoginData) => {
         body: JSON.stringify(data),
     });
 
-    console.log(response.ok, "RESPONSE OKAY");
-
     if (!response.ok) {
         throw new Error("Could not login, try again");
     }
-    //return await response.json();
+
+    return response;
 };

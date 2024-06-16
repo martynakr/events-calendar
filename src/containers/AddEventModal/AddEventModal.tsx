@@ -3,7 +3,7 @@ import { convertToInputString, isAfterToday } from "../../utils/date-utils";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import Modal from "../../components/Modal/Modal";
 import { Event } from "../Calendar/Calendar";
-import { createEvent } from "../../services/services";
+import { LabelFromBackend, createEvent } from "../../services/services";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Form/Input/Input";
@@ -11,17 +11,20 @@ import Button, { ButtonVariant } from "../../components/Button/Button";
 import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
 import HookFormMultiselect from "../../components/Form/Select/HookFormMultiselect.tsx/HookFormMultiselect";
-import { AuthContext } from "../../context/AuthProvider";
 
-interface IAddEventModalProps {
+interface AddEventModalProps {
     showModal: boolean;
     setShowModal: (data: boolean) => unknown;
+    labels: LabelFromBackend[];
 }
 
-const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
+const AddEventModal = ({
+    showModal,
+    setShowModal,
+    labels,
+}: AddEventModalProps) => {
     const { clickedDay } = useContext(ClickedDayContext);
     const { updatedEvents, setUpdatedEvents } = useContext(EventsContext);
-    const { token } = useContext(AuthContext);
 
     const defaults = {
         startDate: convertToInputString(clickedDay),
@@ -74,10 +77,9 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
             ...rest,
         };
         // transform data so it is good for the backend
-        if (token) {
-            await createEvent(dataToSend, token);
-            setShowModal(false);
-        }
+
+        await createEvent(dataToSend);
+        setShowModal(false);
     };
 
     useEffect(() => {
@@ -161,7 +163,10 @@ const AddEventModal = ({ showModal, setShowModal }: IAddEventModalProps) => {
                         />
                     </div>
                     <HookFormMultiselect
-                        options={[{ name: "sport" }, { name: "fun" }]}
+                        options={labels.map((label: LabelFromBackend) => ({
+                            name: label.name,
+                            colour: label.colour,
+                        }))}
                         id="labels"
                     />
                     <div className={styles.Container}>

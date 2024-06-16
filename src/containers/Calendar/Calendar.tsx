@@ -10,7 +10,11 @@ import Table from "../../components/Table/Table";
 import TableHead from "../../components/Table/TableHead/TableHead";
 import TableBody from "../../components/Table/TableBody/TableBody";
 import { useContext, useEffect, useState } from "react";
-import { getEvents } from "../../services/services";
+import {
+    LabelFromBackend,
+    getEvents,
+    getLabels,
+} from "../../services/services";
 import { EventsContext } from "../../context/EventsContext";
 import { generateDays } from "../../utils/date-utils";
 import styles from "./Calendar.module.scss";
@@ -19,7 +23,6 @@ import EventDetailsModal from "../EventDetailsModal/EventDetailsModal";
 import { WindowSizeContext } from "../../context/WindowSizeProvider";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import EventCard from "../../components/EventCard/EventCard";
-import { AuthContext } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 export interface Event {
@@ -42,20 +45,12 @@ const Calendar = () => {
     const { setEvents, updatedEvents, events } = useContext(EventsContext);
     const { isTabletAndBelow } = useContext(WindowSizeContext);
     const [eventsForDay, setEventsForDay] = useState<any>([]);
+    const [labels, setLabels] = useState<LabelFromBackend[]>([]);
     const { clickedDay } = useContext(ClickedDayContext);
-    const { token } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     useEffect(() => {
-        //if (token) {
-        getEvents("").then((res) => {
-            setEvents(res);
-        });
-        //} else {
-        //  navigate("/login");
-        //}
-
-        // if not token redirect to login
+        getEvents().then(setEvents);
+        getLabels().then(setLabels);
     }, [updatedEvents]);
 
     useEffect(() => {
@@ -121,7 +116,11 @@ const Calendar = () => {
     }, [clickedDay]);
     return (
         <div className={styles.Calendar}>
-            <AddEventModal setShowModal={setShowModal} showModal={showModal} />
+            <AddEventModal
+                setShowModal={setShowModal}
+                showModal={showModal}
+                labels={labels}
+            />
             <EventDetailsModal />
             <Nav onClick={handleTodayClick} />
             <div className={styles.Calendar_Container}>

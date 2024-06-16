@@ -4,11 +4,8 @@ import Form from "../../components/Form/Form";
 import Button, { ButtonVariant } from "../../components/Button/Button";
 import { LoginData, login } from "../../services/services";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthProvider";
 
 const LoginPage = () => {
-    const { setToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const methods = useForm();
     const { setError } = methods;
@@ -16,7 +13,6 @@ const LoginPage = () => {
     const onFormSubmit = async (data: LoginData) => {
         try {
             await login(data);
-            //setToken(token.token);
             navigate("/calendar");
         } catch (e) {
             setError("password", {

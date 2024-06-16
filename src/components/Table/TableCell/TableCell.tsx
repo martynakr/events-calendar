@@ -67,6 +67,10 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                     //         (1000 * 60 * 60 * 24) +
                     //     1;
                     // console.log(duartion, "duration", ev.name);
+
+                    console.log(ev, "EVENT");
+                    console.log(eventsForDay, "EVENTS FOR DAY");
+                    console.log(eventsForDay.length > 0);
                     return (
                         <EventCard
                             event={ev}

@@ -16,12 +16,14 @@
             border: 1px solid black;
             border-radius: 2px;
             padding: 4px;
+            margin-bottom: 0;
         }
     }
 
     &_List {
         border: 1px solid black;
         border-top: none;
+        margin-top: 0;
 
         &_Option {
             padding: 10px;
