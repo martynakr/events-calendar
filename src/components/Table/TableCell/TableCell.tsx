@@ -28,6 +28,9 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                         new Date(ev.endDate) >= dateInfo)
                 );
             });
+            console.log(events, "events");
+            console.log(dateInfo, "date info");
+            console.log(filteredEvents, "filtered");
             setEventsForDay(filteredEvents);
         }
     }, [events, currMonth]);
@@ -44,6 +47,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
         dateInfo.setHours(0, 0, 0, 0).toLocaleString()
     )
         classes += ` ${styles.TableCell_Today}`;
+
     return !isTabletAndBelow ? (
         <td className={classes}>
             <div

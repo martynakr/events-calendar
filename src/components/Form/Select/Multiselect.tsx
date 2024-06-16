@@ -134,9 +134,9 @@ const Multiselect = ({
             <div className={styles.Select_Input_Wrapper}>
                 {selectedOptions.length > 0 && (
                     <>
-                        {selectedOptions.map((opt: Option) => (
+                        {selectedOptions.map((opt: Option, i: number) => (
                             <Chip
-                                key={opt.name}
+                                key={i}
                                 option={opt}
                                 onClick={handleRemoveOptionBtnClick}
                             />
@@ -157,11 +157,11 @@ const Multiselect = ({
             {/* move to OptionsList element */}
             {showOptions && (
                 <div className={styles.Select_List} role="filtered-options">
-                    {filteredOptions.map((option: Option) => {
+                    {filteredOptions.map((option: Option, i: number) => {
                         console.log(option, "option");
                         return (
                             <p
-                                key={option.name}
+                                key={i}
                                 onClick={handleOptionClick}
                                 role="option"
                                 className={styles.Select_List_Option}
