@@ -66,7 +66,7 @@ The project contains:
 
 -   **16th June 2024** - updated the project to fetch label data from the backend
 
--   **18th June 2024** - added logout button to nav, updated the Button component to take in extra class names as props
+-   **18th June 2024** - added logout button to nav, updated the Button component to take in extra class names as props, create a HomePageLayout component to reuse for both `/login` and `/register` routes
 
 ## Known issues
 
@@ -75,7 +75,7 @@ The project contains:
 
 ## Next steps
 
--   Update the login page, so it contains some info about the app, login form and a link that redirects users without an account to the register page
+-   Add middleware to redirect non-logged in user to `/login` page when they try to access `/calendar`
 -   Replacing the form validation for creating an event with zod
 -   Reviewing the amount of contexts used in the project
 -   Adding e2e Playwright tests
