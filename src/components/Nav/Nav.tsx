@@ -1,16 +1,40 @@
+import { redirect, useNavigate } from "react-router-dom";
+import { logout } from "../../services/auth";
+import Button, { ButtonVariant } from "../Button/Button";
 import styles from "./Nav.module.scss";
 
-interface INavProps {
+interface NavProps {
     onClick: () => unknown;
 }
 
-const Nav = ({ onClick }: INavProps) => {
+const Nav = ({ onClick }: NavProps) => {
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate("/login");
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     return (
-        <div>
-            <a onClick={onClick} className={styles.Link}>
+        <nav className={styles.Nav}>
+            <a
+                onClick={onClick}
+                className={`${styles.Nav_Link} ${styles.Nav_Today}`}
+            >
                 TODAY
             </a>
-        </div>
+            <Button
+                variant={ButtonVariant.PRIMARY}
+                extraClasses={`${styles.Nav_Logout}`}
+                onClick={handleLogout}
+            >
+                Logout
+            </Button>
+        </nav>
     );
 };
 

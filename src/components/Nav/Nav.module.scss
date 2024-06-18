@@ -1,5 +1,20 @@
-.Link {
-    &:hover {
-        cursor: pointer;
+.Nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
+    text-align: center;
+    &_Link {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &_Logout {
+        grid-column: 5 / 6;
+        justify-self: center;
+    }
+
+    &_Today {
+        grid-column: 3 / 4;
     }
 }

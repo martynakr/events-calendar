@@ -1,15 +1,3 @@
-export interface RegisterData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-}
-
-export interface LoginData {
-    email: string;
-    password: string;
-}
-
 export interface LabelFromBackend {
     id: number;
     name: string;
@@ -27,7 +15,7 @@ export interface EventData {
     labels: Label[];
 }
 
-const MAIN_URL = "http://localhost:8080";
+export const MAIN_URL = "http://localhost:8080";
 
 export const createEvent = async (data: any) => {
     console.log(data);
@@ -74,38 +62,4 @@ export const getLabels = async (): Promise<LabelFromBackend[]> => {
     console.log(data, "labels");
 
     return data;
-};
-
-export const register = async (data: RegisterData) => {
-    const response = await fetch(`${MAIN_URL}/auth/register`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-        throw new Error("Could not register, try again later");
-    }
-    return response;
-};
-
-export const login = async (data: LoginData) => {
-    console.log(data, "LOgin data");
-    const response = await fetch(`${MAIN_URL}/auth/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-        throw new Error("Could not login, try again");
-    }
-
-    return response;
 };

@@ -1,4 +1,4 @@
-import { RegisterData, register } from "../../services/services";
+import { RegisterData, register } from "../../services/auth.ts";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Form/Input/Input";

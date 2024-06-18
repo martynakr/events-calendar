@@ -66,6 +66,8 @@ The project contains:
 
 -   **16th June 2024** - updated the project to fetch label data from the backend
 
+-   **18th June 2024** - added logout button to nav, updated the Button component to take in extra class names as props
+
 ## Known issues
 
 -   The events fetched from the backed does not get displayed.
