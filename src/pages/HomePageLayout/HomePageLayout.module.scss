@@ -1,7 +1,7 @@
 @use "../../assets/pallete.scss" as *;
 @use "../../assets/mixins.scss" as *;
 
-.LoginPage {
+.HomePage {
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -27,7 +27,6 @@
 
     &_Calendar {
         background-color: $aquablue;
-
         color: white;
 
         &_Image {

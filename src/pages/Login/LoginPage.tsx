@@ -3,9 +3,8 @@ import Input from "../../components/Form/Input/Input";
 import Form from "../../components/Form/Form";
 import Button, { ButtonVariant } from "../../components/Button/Button";
 import { LoginData, login } from "../../services/auth.ts";
-import { useNavigate } from "react-router-dom";
-import styles from "./LoginPage.module.scss";
-import calendarImage from "../../assets/calendar.png";
+import { Link, useNavigate } from "react-router-dom";
+import HomePageLayout from "../HomePageLayout/HomePageLayout.tsx";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -23,44 +22,31 @@ const LoginPage = () => {
         }
     };
     return (
-        <main className={styles.LoginPage}>
-            <div
-                className={`${styles.LoginPage_Section} ${styles.LoginPage_Calendar}`}
-            >
-                <h1>Events Calendar</h1>
-                <p>Always be on top of your schedule</p>
-                <img
-                    src={calendarImage}
-                    alt="calendar page"
-                    className={styles.LoginPage_Calendar_Image}
-                />
-            </div>
-            <div className={styles.LoginPage_Section}>
-                <h2>Log in</h2>
-                <FormProvider {...methods}>
-                    <Form onSubmit={onFormSubmit}>
-                        <Input
-                            id="email"
-                            type="email"
-                            labelText="Email"
-                            placeholder="example@email.com"
-                        />
-                        <Input
-                            id="password"
-                            type="password"
-                            labelText="Password"
-                            placeholder="password"
-                        />
-                        <Button variant={ButtonVariant.PRIMARY} type="submit">
-                            Submit
-                        </Button>
-                    </Form>
-                </FormProvider>
-                <p>
-                    Don't have an account? <a href="">Register</a>
-                </p>
-            </div>
-        </main>
+        <HomePageLayout>
+            <h2>Log in</h2>
+            <FormProvider {...methods}>
+                <Form onSubmit={onFormSubmit}>
+                    <Input
+                        id="email"
+                        type="email"
+                        labelText="Email"
+                        placeholder="example@email.com"
+                    />
+                    <Input
+                        id="password"
+                        type="password"
+                        labelText="Password"
+                        placeholder="Password"
+                    />
+                    <Button variant={ButtonVariant.PRIMARY} type="submit">
+                        Submit
+                    </Button>
+                </Form>
+            </FormProvider>
+            <p>
+                Don't have an account? <Link to="/register">Register</Link>
+            </p>
+        </HomePageLayout>
     );
 };
 

@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import registerSchema from "./register-schema";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import HomePageLayout from "../HomePageLayout/HomePageLayout.tsx";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -31,26 +33,47 @@ const RegisterPage = () => {
     }, [isSubmitSuccessful]);
 
     return (
-        <div>
-            <h1>Register</h1>
-            <p>Create an account and never miss an event!</p>
+        <HomePageLayout>
+            <h2>Register</h2>
             <FormProvider {...methods}>
                 <Form onSubmit={onFormSubmit}>
-                    <Input id="firstName" labelText="First name" />
-                    <Input id="lastName" labelText="Last name" />
-                    <Input id="email" type="email" labelText="Email" />
-                    <Input id="password" type="password" labelText="Password" />
+                    <Input
+                        id="firstName"
+                        labelText="First name"
+                        placeholder="First name"
+                    />
+                    <Input
+                        id="lastName"
+                        labelText="Last name"
+                        placeholder="Last name"
+                    />
+                    <Input
+                        id="email"
+                        type="email"
+                        labelText="Email"
+                        placeholder="example@email.com"
+                    />
+                    <Input
+                        id="password"
+                        type="password"
+                        labelText="Password"
+                        placeholder="Password"
+                    />
                     <Input
                         id="passwordConfirm"
                         type="password"
                         labelText="Confirm password"
+                        placeholder="Confirm password"
                     />
                     <Button variant={ButtonVariant.PRIMARY} type="submit">
                         Submit
                     </Button>
                 </Form>
+                <p>
+                    Already have an account? <Link to="/login">Log in</Link>
+                </p>
             </FormProvider>
-        </div>
+        </HomePageLayout>
     );
 };
 
