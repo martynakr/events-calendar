@@ -8,13 +8,20 @@ export enum ButtonVariant {
     ICON = "icon",
 }
 
-interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
     onClick?: () => unknown;
     variant: ButtonVariant;
+    extraClasses?: string;
 }
 
-const Button = ({ children, onClick, variant, ...rest }: IButtonProps) => {
+const Button = ({
+    children,
+    onClick,
+    variant,
+    extraClasses,
+    ...rest
+}: ButtonProps) => {
     let classes;
 
     if (variant === "primary") {
@@ -29,6 +36,9 @@ const Button = ({ children, onClick, variant, ...rest }: IButtonProps) => {
         classes = `${styles.Button} ${styles.Button_Icon}`;
     }
 
+    if (extraClasses) {
+        classes += ` ${extraClasses}`;
+    }
     return (
         <button onClick={onClick} className={classes} {...rest}>
             {children}

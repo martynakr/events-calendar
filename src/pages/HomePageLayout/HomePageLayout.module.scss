@@ -1,0 +1,37 @@
+@use "../../assets/pallete.scss" as *;
+@use "../../assets/mixins.scss" as *;
+
+.HomePage {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    margin-top: 0;
+
+    @include tablet-below {
+        flex-direction: column;
+    }
+
+    &_Section {
+        padding: 20px;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+
+        @include tablet-below {
+            width: 100%;
+        }
+    }
+
+    &_Calendar {
+        background-color: $aquablue;
+        color: white;
+
+        &_Image {
+            width: 50%;
+            padding: 10px;
+        }
+    }
+}
