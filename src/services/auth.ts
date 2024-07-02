@@ -18,6 +18,10 @@ export const register = async (data: RegisterData) => {
         credentials: "include",
         headers: {
             "Content-Type": "application/json",
+            "X-XSRF-TOKEN": document.cookie.replace(
+                /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+                "$1"
+            ),
         },
         body: JSON.stringify(data),
     });
@@ -28,12 +32,30 @@ export const register = async (data: RegisterData) => {
     return response;
 };
 
+export const saveCsrfToken = () => {
+    const csrfToken = document.cookie.replace(
+        /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+        "$1"
+    );
+    if (csrfToken) {
+        sessionStorage.setItem("X-XSRF-TOKEN", csrfToken);
+    }
+};
+
+export const getCsrfToken = () => {
+    return sessionStorage.getItem("X-XSRF-TOKEN") || "";
+};
+
 export const login = async (data: LoginData) => {
     const response = await fetch(`${MAIN_URL}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json",
+            "X-XSRF-TOKEN": document.cookie.replace(
+                /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+                "$1"
+            ),
         },
         body: JSON.stringify(data),
     });
@@ -51,10 +73,19 @@ export const logout = async () => {
         credentials: "include",
         headers: {
             "Content-Type": "application/json",
+            "X-XSRF-TOKEN": document.cookie.replace(
+                /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+                "$1"
+            ),
         },
     });
 
     if (!response.ok) {
         throw new Error("Could not logout, try again");
     }
+};
+
+export const getToken = async () => {
+    await fetch(`${MAIN_URL}/auth/token`);
+    saveCsrfToken();
 };

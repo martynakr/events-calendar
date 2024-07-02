@@ -1,3 +1,5 @@
+import { saveCsrfToken } from "./auth";
+
 export interface LabelFromBackend {
     id: number;
     name: string;
@@ -18,16 +20,26 @@ export interface EventData {
 export const MAIN_URL = "http://localhost:8080";
 
 export const createEvent = async (data: any) => {
-    console.log(data);
+    console.log(data, "POST EVENT");
+    console.log(
+        document.cookie.replace(
+            /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+            "$1"
+        ),
+        "get csrf token"
+    );
     const response = await fetch(`${MAIN_URL}/events`, {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json",
+            "X-XSRF-TOKEN": document.cookie.replace(
+                /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+                "$1"
+            ),
         },
         body: JSON.stringify(data),
     });
-    console.log(response, "RESPONSE CREATE");
 
     if (!response.ok) {
         throw new Error("Could not create an event");
@@ -47,6 +59,7 @@ export const getEvents = async () => {
     }
     const data = await response.json();
     console.log(data, "EVENTS");
+    saveCsrfToken();
     return data;
 };
 
@@ -60,6 +73,7 @@ export const getLabels = async (): Promise<LabelFromBackend[]> => {
     }
     const data = await response.json();
     console.log(data, "labels");
+    //saveCsrfToken();
 
     return data;
 };

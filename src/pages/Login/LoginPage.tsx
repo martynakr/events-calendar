@@ -2,9 +2,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import Input from "../../components/Form/Input/Input";
 import Form from "../../components/Form/Form";
 import Button, { ButtonVariant } from "../../components/Button/Button";
-import { LoginData, login } from "../../services/auth.ts";
+import { LoginData, getToken, login } from "../../services/auth.ts";
 import { Link, useNavigate } from "react-router-dom";
 import HomePageLayout from "../HomePageLayout/HomePageLayout.tsx";
+import { useEffect } from "react";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -21,6 +22,17 @@ const LoginPage = () => {
             });
         }
     };
+
+    useEffect(() => {
+        getToken();
+        console.log(
+            document.cookie.replace(
+                /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+                "$1"
+            ),
+            "Initial token"
+        );
+    }, []);
     return (
         <HomePageLayout>
             <h2>Log in</h2>
