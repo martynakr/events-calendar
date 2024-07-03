@@ -10,12 +10,6 @@ import Table from "../../components/Table/Table";
 import TableHead from "../../components/Table/TableHead/TableHead";
 import TableBody from "../../components/Table/TableBody/TableBody";
 import { useContext, useEffect, useState } from "react";
-import {
-    LabelFromBackend,
-    createEvent,
-    getEvents,
-    getLabels,
-} from "../../services/services";
 import { EventsContext } from "../../context/EventsContext";
 import { generateDays } from "../../utils/date-utils";
 import styles from "./Calendar.module.scss";
@@ -25,6 +19,7 @@ import { WindowSizeContext } from "../../context/WindowSizeProvider";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import EventCard from "../../components/EventCard/EventCard";
 import { useNavigate } from "react-router-dom";
+import { createEvent, getEvents } from "../../services/events";
 
 export interface Event {
     startDate: string;

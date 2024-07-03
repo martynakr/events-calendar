@@ -68,6 +68,8 @@ The project contains:
 
 -   **18th June 2024** - added logout button to nav, updated the Button component to take in extra class names as props, create a HomePageLayout component to reuse for both `/login` and `/register` routes
 
+-   **3rd July 2024** - updated services functions that fetch data to use Axios - it reduced the amount of boilerplate code needed for each function, allowed to create an interceptor that doesn't allow non-logged in users to view `/calendar` page, redirects them to `/login` instead.
+
 ## Known issues
 
 -   The events fetched from the backed does not get displayed.
