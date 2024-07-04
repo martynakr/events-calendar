@@ -70,6 +70,8 @@ The project contains:
 
 -   **3rd July 2024** - updated services functions that fetch data to use Axios - it reduced the amount of boilerplate code needed for each function, allowed to create an interceptor that doesn't allow non-logged in users to view `/calendar` page, redirects them to `/login` instead.
 
+-   **4th July 2024** - implemented delete event functionality
+
 ## Known issues
 
 -   The events fetched from the backed does not get displayed.

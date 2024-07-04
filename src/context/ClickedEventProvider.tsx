@@ -6,6 +6,8 @@ interface ClickedEventContextProps {
     readonly setShowEventModal: (val: boolean) => void;
     readonly clickedEvent: Event | null;
     readonly setClickedEvent: (data: Event) => void;
+    readonly showConfirmDeleteModal: boolean;
+    readonly setShowConfirmDeleteModal: (val: boolean) => void;
 }
 
 interface IContextProps {
@@ -17,11 +19,16 @@ export const ClickedEventContext = createContext<ClickedEventContextProps>({
     setShowEventModal: () => null,
     clickedEvent: null,
     setClickedEvent: () => null,
+    showConfirmDeleteModal: false,
+    setShowConfirmDeleteModal: () => null,
 });
+
 const ClickedEventProvider = ({ children }: IContextProps) => {
     const [showEventModal, setShowEventModal] = useState<boolean>(false);
 
     const [clickedEvent, setClickedEvent] = useState<Event | null>(null);
+    const [showConfirmDeleteModal, setShowConfirmDeleteModal] =
+        useState<boolean>(false);
 
     return (
         <ClickedEventContext.Provider
@@ -30,6 +37,8 @@ const ClickedEventProvider = ({ children }: IContextProps) => {
                 clickedEvent,
                 setShowEventModal,
                 showEventModal,
+                showConfirmDeleteModal,
+                setShowConfirmDeleteModal,
             }}
         >
             {children}

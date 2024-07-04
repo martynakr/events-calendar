@@ -18,8 +18,10 @@ import EventDetailsModal from "../EventDetailsModal/EventDetailsModal";
 import { WindowSizeContext } from "../../context/WindowSizeProvider";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import EventCard from "../../components/EventCard/EventCard";
-import { useNavigate } from "react-router-dom";
-import { createEvent, getEvents } from "../../services/events";
+import { getEvents } from "../../services/events";
+import { LabelFromBackend, getLabels } from "../../services/labels";
+import { ClickedEventContext } from "../../context/ClickedEventProvider";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 
 export interface Event {
     startDate: string;
@@ -32,60 +34,62 @@ export interface Event {
 
 const Calendar = () => {
     const [today, setToday] = useState<Date>(new Date());
-    // const [showModal, setShowModal] = useState<boolean>(false);
-    // const [currentMonthDays, setCurrentMonthDays] = useState<Date[][] | null>(
-    //     null
-    // );
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [currentMonthDays, setCurrentMonthDays] = useState<Date[][] | null>(
+        null
+    );
     const [displayedMonth, setDisplayedMonth] = useState<number>(0);
     const [displayedYear, setDisplayedYear] = useState<number>(0);
-    // const { setEvents, updatedEvents, events } = useContext(EventsContext);
-    // const { isTabletAndBelow } = useContext(WindowSizeContext);
-    // const [eventsForDay, setEventsForDay] = useState<any>([]);
-    // const [labels, setLabels] = useState<LabelFromBackend[]>([]);
-    // const { clickedDay } = useContext(ClickedDayContext);
+    const { setEvents, updatedEvents, events } = useContext(EventsContext);
+    const { isTabletAndBelow } = useContext(WindowSizeContext);
+    const [eventsForDay, setEventsForDay] = useState<any>([]);
+    const [labels, setLabels] = useState<LabelFromBackend[]>([]);
+    const { clickedDay } = useContext(ClickedDayContext);
+    const { setShowConfirmDeleteModal, showConfirmDeleteModal } =
+        useContext(ClickedEventContext);
 
-    // useEffect(() => {
-    //     getEvents().then(setEvents);
-    //     getLabels().then(setLabels);
-    // }, [updatedEvents]);
+    useEffect(() => {
+        getEvents().then(setEvents);
+        getLabels().then(setLabels);
+    }, [updatedEvents]);
 
     useEffect(() => {
         setDisplayedMonth(today.getMonth());
         setDisplayedYear(today.getFullYear());
     }, [today]);
 
-    // useEffect(() => {
-    //     setCurrentMonthDays(generateDays(displayedYear, displayedMonth));
-    // }, [displayedMonth, displayedYear]);
+    useEffect(() => {
+        setCurrentMonthDays(generateDays(displayedYear, displayedMonth));
+    }, [displayedMonth, displayedYear]);
 
-    // const handlePrevClick = () => {
-    //     if (displayedMonth === 0) {
-    //         setDisplayedMonth(11);
-    //         setDisplayedYear(displayedYear - 1);
-    //         return;
-    //     }
-    //     setDisplayedMonth(displayedMonth - 1);
-    // };
+    const handlePrevClick = () => {
+        if (displayedMonth === 0) {
+            setDisplayedMonth(11);
+            setDisplayedYear(displayedYear - 1);
+            return;
+        }
+        setDisplayedMonth(displayedMonth - 1);
+    };
 
-    // const handleNextClick = () => {
-    //     if (displayedMonth === 11) {
-    //         setDisplayedMonth(0);
-    //         setDisplayedYear(displayedYear + 1);
-    //         return;
-    //     }
-    //     setDisplayedMonth(displayedMonth + 1);
-    // };
+    const handleNextClick = () => {
+        if (displayedMonth === 11) {
+            setDisplayedMonth(0);
+            setDisplayedYear(displayedYear + 1);
+            return;
+        }
+        setDisplayedMonth(displayedMonth + 1);
+    };
 
-    // const handleCellClick = () => {
-    //     setShowModal(true);
-    // };
+    const handleCellClick = () => {
+        setShowModal(true);
+    };
 
-    // // static data would be better?
-    // const daysOfWeek = currentMonthDays
-    //     ? currentMonthDays[currentMonthDays.length - 1].map((date) =>
-    //           date.toLocaleString("default", { weekday: "short" })
-    //       )
-    //     : [""];
+    // static data would be better?
+    const daysOfWeek = currentMonthDays
+        ? currentMonthDays[currentMonthDays.length - 1].map((date) =>
+              date.toLocaleString("default", { weekday: "short" })
+          )
+        : [""];
 
     const handleTodayClick = () => {
         if (displayedMonth !== today.getMonth()) {
@@ -97,48 +101,22 @@ const Calendar = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (events) {
-    //         const filteredEvents = events.filter((ev: any) => {
-    //             return (
-    //                 new Date(ev.startDate).toLocaleDateString() ===
-    //                     clickedDay.toLocaleDateString() ||
-    //                 (new Date(ev.startDate) <= clickedDay &&
-    //                     new Date(ev.endDate) >= clickedDay)
-    //             );
-    //         });
-    //         setEventsForDay(filteredEvents);
-    //     }
-    // }, [clickedDay]);
+    console.log(eventsForDay, "events for day");
 
-    let token = null;
-    useEffect(() => {
-        getEvents();
-        token = document.cookie.replace(
-            /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
-            "$1"
-        );
-
-        console.log(token, "Initial token");
-        // if (token) {
-        //     createEvent({ name: "New event" }, token);
-        // }
-    }, []);
-
-    const handleClick = () => {
-        createEvent({ name: "New event" });
-    };
     return (
         <div className={styles.Calendar}>
-            <button onClick={handleClick}>CLick</button>
             <Nav onClick={handleTodayClick} />
-            {/* <AddEventModal
+            <ConfirmDeleteModal
+                setShowModal={setShowConfirmDeleteModal}
+                showModal={showConfirmDeleteModal}
+            />
+            <AddEventModal
                 setShowModal={setShowModal}
                 showModal={showModal}
                 labels={labels}
             />
             <EventDetailsModal />
-            <Nav onClick={handleTodayClick} />
+
             <div className={styles.Calendar_Container}>
                 <Button
                     data-testid={"prevBtn"}
@@ -189,11 +167,19 @@ const Calendar = () => {
                     </div>
                     {eventsForDay.length > 0 &&
                         eventsForDay.map((ev: any) => {
-                            return <EventCard event={ev} key={ev.id} />;
+                            return (
+                                <EventCard
+                                    event={ev}
+                                    key={ev.id}
+                                    onDeleteClick={() =>
+                                        setShowConfirmDeleteModal(true)
+                                    }
+                                />
+                            );
                         })}
                     {eventsForDay.length === 0 && <p>No events</p>}
                 </div>
-            )} */}
+            )}
         </div>
     );
 };

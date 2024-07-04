@@ -4,8 +4,15 @@
     font-size: 12px;
     background-color: $aquablue;
     color: black;
-    padding: 0 2px;
-    margin: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 6px;
+
+    &__Text {
+        padding: 4px;
+        margin: 0;
+    }
 
     &:hover {
         cursor: pointer;
@@ -16,5 +23,13 @@
         height: 24px;
         display: flex;
         align-items: center;
+    }
+
+    &_Delete {
+        font-size: 12px;
+        margin: 0;
+        padding: 0 8px;
+        height: auto;
+        width: auto;
     }
 }

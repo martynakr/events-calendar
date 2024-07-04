@@ -13,7 +13,7 @@ const EventDetailsModal = () => {
         minutes: 0,
         seconds: 0,
     });
-    const [calculating, setCalculating] = useState<boolean>(true);
+    const [calculating, setCalculating] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
 
     let intervalId: any;
@@ -42,10 +42,10 @@ const EventDetailsModal = () => {
             {clickedEvent && <h3>{clickedEvent.eventName}</h3>}
             {clickedEvent && !error && !calculating && (
                 <>
-                    <p>
+                    <h2>
                         {timeUntil.days} days : {timeUntil.hours} h :&nbsp;
                         {timeUntil.minutes} min : {timeUntil.seconds} s
-                    </p>
+                    </h2>
                     <p>until this event</p>
                 </>
             )}

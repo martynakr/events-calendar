@@ -3,7 +3,6 @@ import { convertToInputString, isAfterToday } from "../../utils/date-utils";
 import { ClickedDayContext } from "../../context/ClickedDayProvider";
 import Modal from "../../components/Modal/Modal";
 import { Event } from "../Calendar/Calendar";
-import { LabelFromBackend, createEvent } from "../../services/services";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Form/Input/Input";
@@ -11,6 +10,8 @@ import Button, { ButtonVariant } from "../../components/Button/Button";
 import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
 import HookFormMultiselect from "../../components/Form/Select/HookFormMultiselect.tsx/HookFormMultiselect";
+import { LabelFromBackend } from "../../services/labels";
+import { createEvent } from "../../services/events";
 
 interface AddEventModalProps {
     showModal: boolean;

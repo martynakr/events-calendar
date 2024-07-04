@@ -5,6 +5,7 @@ import EventCard from "../../EventCard/EventCard";
 import { isNotFirstEventDay } from "../../../utils/date-utils";
 import { ClickedDayContext } from "../../../context/ClickedDayProvider";
 import { WindowSizeContext } from "../../../context/WindowSizeProvider";
+import { ClickedEventContext } from "../../../context/ClickedEventProvider";
 
 interface ITableCellProps {
     dateInfo: Date;
@@ -17,6 +18,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
     const { events } = useContext(EventsContext);
     const { isTabletAndBelow } = useContext(WindowSizeContext);
     const { setClickedDay } = useContext(ClickedDayContext);
+    const { setShowConfirmDeleteModal } = useContext(ClickedEventContext);
 
     useEffect(() => {
         if (events) {
@@ -76,6 +78,9 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                                 dateInfo,
                                 ev
                             )}
+                            onDeleteClick={() =>
+                                setShowConfirmDeleteModal(true)
+                            }
                         />
                     );
                 })}

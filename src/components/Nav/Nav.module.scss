@@ -3,6 +3,7 @@
     grid-template-columns: repeat(5, 1fr);
     width: 100%;
     text-align: center;
+    margin: 20px;
     &_Link {
         &:hover {
             cursor: pointer;

@@ -15,3 +15,8 @@ export const getLabels = async (): Promise<LabelFromBackend[]> => {
     console.log(response, "labels response");
     return response.data;
 };
+
+export const createLabel = async (data: Label) => {
+    const response = await instance.post("/labels", data);
+    return response.data;
+};

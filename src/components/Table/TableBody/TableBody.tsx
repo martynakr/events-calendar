@@ -1,11 +1,11 @@
 import TableCell from "../TableCell/TableCell";
 
-interface ITableBodyProps {
+interface TableBodyProps {
     weeks: Date[][];
     onClick: (data: Date) => unknown;
 }
 
-const TableBody = ({ weeks, onClick }: ITableBodyProps) => {
+const TableBody = ({ weeks, onClick }: TableBodyProps) => {
     const currMonth = weeks[Math.floor(weeks.length / 2)][0].getMonth();
     return (
         <tbody>
