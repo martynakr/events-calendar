@@ -39,7 +39,7 @@ const EventDetailsModal = () => {
 
     return (
         <Modal show={showEventModal} setShow={setShowEventModal}>
-            {clickedEvent && <h3>{clickedEvent.eventName}</h3>}
+            {clickedEvent && <h3>{clickedEvent.name}</h3>}
             {clickedEvent && !error && !calculating && (
                 <>
                     <h2>

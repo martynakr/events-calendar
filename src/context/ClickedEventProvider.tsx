@@ -1,11 +1,12 @@
 import { ReactNode, createContext, useState } from "react";
 import { Event } from "../containers/Calendar/Calendar";
+import { EventData } from "../services/events";
 
 interface ClickedEventContextProps {
     readonly showEventModal: boolean;
     readonly setShowEventModal: (val: boolean) => void;
-    readonly clickedEvent: Event | null;
-    readonly setClickedEvent: (data: Event) => void;
+    readonly clickedEvent: EventData | null;
+    readonly setClickedEvent: (data: EventData) => void;
     readonly showConfirmDeleteModal: boolean;
     readonly setShowConfirmDeleteModal: (val: boolean) => void;
 }
@@ -26,7 +27,7 @@ export const ClickedEventContext = createContext<ClickedEventContextProps>({
 const ClickedEventProvider = ({ children }: IContextProps) => {
     const [showEventModal, setShowEventModal] = useState<boolean>(false);
 
-    const [clickedEvent, setClickedEvent] = useState<Event | null>(null);
+    const [clickedEvent, setClickedEvent] = useState<EventData | null>(null);
     const [showConfirmDeleteModal, setShowConfirmDeleteModal] =
         useState<boolean>(false);
 

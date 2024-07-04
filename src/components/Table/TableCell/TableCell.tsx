@@ -6,6 +6,7 @@ import { isNotFirstEventDay } from "../../../utils/date-utils";
 import { ClickedDayContext } from "../../../context/ClickedDayProvider";
 import { WindowSizeContext } from "../../../context/WindowSizeProvider";
 import { ClickedEventContext } from "../../../context/ClickedEventProvider";
+import { EventData } from "../../../services/events";
 
 interface ITableCellProps {
     dateInfo: Date;
@@ -14,11 +15,12 @@ interface ITableCellProps {
 }
 
 const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
-    const [eventsForDay, setEventsForDay] = useState<any>([]);
+    const [eventsForDay, setEventsForDay] = useState<EventData[]>([]);
     const { events } = useContext(EventsContext);
     const { isTabletAndBelow } = useContext(WindowSizeContext);
     const { setClickedDay } = useContext(ClickedDayContext);
-    const { setShowConfirmDeleteModal } = useContext(ClickedEventContext);
+    const { setShowConfirmDeleteModal, setClickedEvent } =
+        useContext(ClickedEventContext);
 
     useEffect(() => {
         if (events) {
@@ -30,6 +32,7 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                         new Date(ev.endDate) >= dateInfo)
                 );
             });
+            console.log("setting events for day...");
             setEventsForDay(filteredEvents);
         }
     }, [events, currMonth]);
@@ -78,9 +81,10 @@ const TableCell = ({ dateInfo, currMonth, onClick }: ITableCellProps) => {
                                 dateInfo,
                                 ev
                             )}
-                            onDeleteClick={() =>
-                                setShowConfirmDeleteModal(true)
-                            }
+                            onDeleteClick={() => {
+                                setClickedEvent(ev);
+                                setShowConfirmDeleteModal(true);
+                            }}
                         />
                     );
                 })}

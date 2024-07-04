@@ -31,11 +31,9 @@ const EventCard = ({
     //         <p></p>
     //     </div>
     // );
+    
 
-    console.log(event, "");
-
-    const handleClick = (e: any) => {
-        e.stopPropagation();
+    const handleClick = () => {
         setShowEventModal(true);
         setClickedEvent(event);
     };

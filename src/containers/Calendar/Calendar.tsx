@@ -45,8 +45,11 @@ const Calendar = () => {
     const [eventsForDay, setEventsForDay] = useState<any>([]);
     const [labels, setLabels] = useState<LabelFromBackend[]>([]);
     const { clickedDay } = useContext(ClickedDayContext);
-    const { setShowConfirmDeleteModal, showConfirmDeleteModal } =
-        useContext(ClickedEventContext);
+    const {
+        setShowConfirmDeleteModal,
+        showConfirmDeleteModal,
+        setClickedEvent,
+    } = useContext(ClickedEventContext);
 
     useEffect(() => {
         getEvents().then(setEvents);
@@ -57,6 +60,21 @@ const Calendar = () => {
         setDisplayedMonth(today.getMonth());
         setDisplayedYear(today.getFullYear());
     }, [today]);
+
+    useEffect(() => {
+        // change this because I am using the same state twice
+        if (events)
+            setEventsForDay(
+                events.filter((ev: any) => {
+                    return (
+                        new Date(ev.startDate).toLocaleDateString() ===
+                            clickedDay.toLocaleDateString() ||
+                        (new Date(ev.startDate) <= clickedDay &&
+                            new Date(ev.endDate) >= clickedDay)
+                    );
+                })
+            );
+    }, [clickedDay, events]);
 
     useEffect(() => {
         setCurrentMonthDays(generateDays(displayedYear, displayedMonth));
@@ -171,9 +189,10 @@ const Calendar = () => {
                                 <EventCard
                                     event={ev}
                                     key={ev.id}
-                                    onDeleteClick={() =>
-                                        setShowConfirmDeleteModal(true)
-                                    }
+                                    onDeleteClick={() => {
+                                        setShowConfirmDeleteModal(true);
+                                        setClickedEvent(ev);
+                                    }}
                                 />
                             );
                         })}

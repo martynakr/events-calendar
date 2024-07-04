@@ -2,6 +2,7 @@ import instance from "./axios";
 import { Label } from "./labels";
 
 export interface EventData {
+    id: number;
     name: string;
     startDate: Date;
     endDate: Date;
@@ -18,4 +19,8 @@ export const createEvent = async (data: any) => {
     console.log(data, "POST EVENT");
     const response = await instance.post("/events", data);
     return response.data;
+};
+
+export const deleteEvent = async (id: number) => {
+    await instance.delete(`/events/${id}`);
 };

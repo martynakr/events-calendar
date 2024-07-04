@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
-import { IEvent } from "../containers/Calendar/Calendar";
+import { Event } from "../containers/Calendar/Calendar";
+import { EventData } from "../services/events";
 
 interface ContextProps {
     readonly events: any;
@@ -19,7 +20,7 @@ interface IContextProps {
 }
 
 const EventsContextProvider = ({ children }: IContextProps) => {
-    const [events, setEvents] = useState<IEvent[] | null>(null);
+    const [events, setEvents] = useState<EventData[] | null>(null);
     const [updatedEvents, setUpdatedEvents] = useState<number>(0);
 
     return (
