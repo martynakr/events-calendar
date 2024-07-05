@@ -11,7 +11,7 @@ import styles from "./AddEventModal.module.scss";
 import { EventsContext } from "../../context/EventsContext";
 import HookFormMultiselect from "../../components/Form/Select/HookFormMultiselect.tsx/HookFormMultiselect";
 import { LabelFromBackend } from "../../services/labels";
-import { createEvent } from "../../services/events";
+import { createEvent, getEvents } from "../../services/events";
 
 interface AddEventModalProps {
     showModal: boolean;
@@ -25,7 +25,7 @@ const AddEventModal = ({
     labels,
 }: AddEventModalProps) => {
     const { clickedDay } = useContext(ClickedDayContext);
-    const { updatedEvents, setUpdatedEvents } = useContext(EventsContext);
+    const { updatedEvents, setEvents } = useContext(EventsContext);
 
     const defaults = {
         startDate: convertToInputString(clickedDay),
@@ -44,7 +44,7 @@ const AddEventModal = ({
         ),
         endDate: convertToInputString(clickedDay),
         eventName: "",
-        labels: [],
+        labels: null,
     };
 
     const methods = useForm({
@@ -84,8 +84,9 @@ const AddEventModal = ({
     };
 
     useEffect(() => {
-        setUpdatedEvents(updatedEvents + 1);
+        getEvents().then(setEvents);
         reset({ ...defaults });
+        // clear the labels here as well
     }, [isSubmitSuccessful]);
 
     useEffect(() => {
@@ -169,6 +170,7 @@ const AddEventModal = ({
                             colour: label.colour,
                         }))}
                         id="labels"
+                        clearOnSubmit={isSubmitSuccessful}
                     />
                     <div className={styles.Container}>
                         <Button

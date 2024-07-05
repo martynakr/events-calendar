@@ -26,7 +26,6 @@ const ConfirmDeleteModal = ({
         message: null,
         showError: false,
     });
-    console.log(clickedEvent, "CLICKED EVENT");
 
     const handleDelete = async () => {
         try {

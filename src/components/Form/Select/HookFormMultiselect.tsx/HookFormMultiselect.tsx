@@ -1,13 +1,22 @@
 import { useFormContext } from "react-hook-form";
 import Multiselect, { Option } from "../Multiselect";
+import { useEffect } from "react";
 
 interface HookFormMultiselectProps {
     options: Option[];
     id: string;
+    clearOnSubmit: boolean;
 }
 
-const HookFormMultiselect = ({ options, id }: HookFormMultiselectProps) => {
-    const { setValue } = useFormContext();
+const HookFormMultiselect = ({
+    options,
+    id,
+    clearOnSubmit,
+}: HookFormMultiselectProps) => {
+    const {
+        setValue,
+        formState: { isSubmitSuccessful },
+    } = useFormContext();
 
     const onSelectedOptionsChange = (val: Option | Option[]) => {
         setValue(id, val);
@@ -23,6 +32,7 @@ const HookFormMultiselect = ({ options, id }: HookFormMultiselectProps) => {
                     console.log("");
                 }}
                 onSelectedOptionsChange={onSelectedOptionsChange}
+                clear={clearOnSubmit}
             />
         </div>
     );

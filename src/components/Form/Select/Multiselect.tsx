@@ -19,6 +19,7 @@ interface SelectProps {
     id: string;
     onNewOptionSubmit: (option: Option) => unknown;
     onSelectedOptionsChange?: (options: Option[]) => unknown;
+    clear?: boolean;
 }
 
 const Chip = ({ option, onClick }: ChipProps) => {
@@ -42,6 +43,7 @@ const Multiselect = ({
     id,
     onNewOptionSubmit,
     onSelectedOptionsChange,
+    clear,
 }: SelectProps) => {
     // clean up options to only get unique values just in case
 
@@ -52,6 +54,8 @@ const Multiselect = ({
     const [filteredOptions, setFilteredOptions] = useState<Option[]>([]);
     const [newOption, setNewOption] = useState<string>("");
 
+    // clear newOption and selectedOptions when the form is submitted
+
     const handleInputClick = () => {
         if (!showOptions) setShowOptions(true);
     };
@@ -61,6 +65,11 @@ const Multiselect = ({
         setAllOptions([...unique]);
         setFilteredOptions([...unique, ...selectedOptions]);
     }, [options]);
+
+    useEffect(() => {
+        setShowOptions(false);
+        setSelectedOptions([]);
+    }, [clear]);
 
     const handleOptionClick = (e: any) => {
         const isOptionSelected = selectedOptions.some(
@@ -158,7 +167,6 @@ const Multiselect = ({
             {showOptions && (
                 <div className={styles.Select_List} role="filtered-options">
                     {filteredOptions.map((option: Option, i: number) => {
-                        console.log(option, "option");
                         return (
                             <p
                                 key={i}

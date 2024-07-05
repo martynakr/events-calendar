@@ -119,8 +119,6 @@ const Calendar = () => {
         }
     };
 
-    console.log(eventsForDay, "events for day");
-
     return (
         <div className={styles.Calendar}>
             <Nav onClick={handleTodayClick} />
