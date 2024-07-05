@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./Multiselect.module.scss";
+import Button, { ButtonVariant } from "../../Button/Button";
 
 export interface Option {
     name: string;
@@ -23,16 +24,23 @@ interface SelectProps {
 }
 
 const Chip = ({ option, onClick }: ChipProps) => {
+    const handleAddBtnClick = () => {
+        // e.preventDefault();
+        onClick(option);
+    };
     return (
         <div role="selected-option">
             <span>{option.name}</span>
+            {/* <Button variant={ButtonVariant.ICON} onClick={handleAddBtnClick}>
+                x
+            </Button> */}
             <button
                 onClick={(e) => {
                     e.preventDefault();
                     onClick(option);
                 }}
             >
-                x
+                X
             </button>
         </div>
     );
@@ -53,8 +61,6 @@ const Multiselect = ({
     const [showAddBtn, setShowAddBtn] = useState<boolean>(false);
     const [filteredOptions, setFilteredOptions] = useState<Option[]>([]);
     const [newOption, setNewOption] = useState<string>("");
-
-    // clear newOption and selectedOptions when the form is submitted
 
     const handleInputClick = () => {
         if (!showOptions) setShowOptions(true);
@@ -88,6 +94,10 @@ const Multiselect = ({
                 ...selectedOptions,
                 { name: e.target.innerText },
             ]);
+        }
+        setFilteredOptions([...allOptions]);
+        if (newOption) {
+            setNewOption("");
         }
     };
 
